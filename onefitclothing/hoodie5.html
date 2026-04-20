@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneFit Clothing - OneFit Originals Hoodie</title>
+    <link rel="shortcut icon" href="OneFit Clothing.png" type="image/png">
+    <!-- Homepage fonts & styles (Cormorant Garamond + DM Sans) to match index.html perfectly -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ----- ROOT VARIABLES (exactly as index.html) ----- */
+        :root {
+            --forest: #1D503A;
+            --forest-deep: #0f2e20;
+            --blush: #F9E4DA;
+            --peach: #F9C6A7;
+            --cream: #FDF6F0;
+            --red: #FF6B6B;
+            --text: #1a1a1a;
+            --shadow-sm: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
+            --shadow-md: 0 20px 35px -12px rgba(29,80,58,0.12);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ----- NAVBAR (identical to index.html) ----- */
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 22px 60px;
+            background: rgba(253, 246, 240, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(29,80,58,0.08);
+            transition: padding 0.3s ease, box-shadow 0.3s;
+        }
+        .navbar.scrolled { padding: 12px 60px; box-shadow: 0 6px 28px rgba(29,80,58,0.1); }
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 30px;
+            font-weight: 600;
+            color: var(--forest);
+            text-decoration: none;
+            margin-right: 50px;
+            letter-spacing: -0.5px;
+        }
+        .search-container {
+            position: relative;
+            width: 280px;
+            margin-right: 50px;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 11px 42px 11px 18px;
+            border-radius: 50px;
+            border: 1.5px solid rgba(29,80,58,0.15);
+            background: white;
+            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            transition: 0.3s;
+            outline: none;
+        }
+        .search-container input:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(29,80,58,0.08); }
+        .search-container button {
+            position: absolute; right: 14px; top: 50%;
+            transform: translateY(-50%);
+            background: none; border: none;
+            color: var(--forest); cursor: pointer;
+        }
+        .nav-links { display: flex; flex-grow: 1; justify-content: space-between; align-items: center; }
+        .links { display: flex; gap: 32px; }
+        .links a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+        .links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1.5px;
+            background: var(--forest);
+            transition: width 0.3s;
+        }
+        .links a:hover { color: var(--forest); }
+        .links a:hover::after { width: 100%; }
+        .icons { display: flex; gap: 22px; align-items: center; }
+        .icon {
+            position: relative;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .icon:hover { color: var(--forest); transform: scale(1.08); }
+        .badge {
+            position: absolute; top: -8px; right: -8px;
+            background: var(--forest); color: white;
+            border-radius: 50%; width: 17px; height: 17px;
+            font-size: 10px; display: flex;
+            align-items: center; justify-content: center;
+            font-weight: 600;
+        }
+
+        /* ----- MAIN CONTAINER ----- */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 40px 32px 60px;
+        }
+
+        /* ----- PRODUCT SECTION (refined elegant layout) ----- */
+        .product-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 48px;
+            margin-bottom: 70px;
+        }
+        .product-gallery {
+            flex: 1.2;
+            min-width: 300px;
+        }
+        .main-image {
+            width: 100%;
+            height: 520px;
+            background: #f8f2ec;
+            border-radius: 32px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s;
+        }
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+        .main-image:hover img {
+            transform: scale(1.02);
+        }
+        .product-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        .product-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+        .product-price {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--forest);
+            margin-bottom: 16px;
+        }
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .stars {
+            color: #f5b342;
+            font-size: 15px;
+            letter-spacing: 2px;
+        }
+        .product-rating span {
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .product-description {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #4a4a4a;
+            margin-bottom: 32px;
+            background: #fff8f3;
+            padding: 20px 24px;
+            border-radius: 20px;
+            border-left: 4px solid var(--peach);
+        }
+        .options-container {
+            margin-top: 8px;
+        }
+        .option-label {
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: block;
+            color: var(--forest);
+        }
+        .size-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .size-option {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 10px 24px;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .size-option.active {
+            background: var(--forest);
+            border-color: var(--forest);
+            color: white;
+            box-shadow: 0 2px 8px rgba(29,80,58,0.2);
+        }
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 32px;
+        }
+        .quantity-btn {
+            width: 44px;
+            height: 48px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 60px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-weight: 500;
+        }
+        .quantity-btn:hover {
+            background: #f5f0eb;
+        }
+        .quantity-input {
+            width: 70px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 60px;
+            padding: 12px 0;
+            font-size: 16px;
+            font-weight: 500;
+            outline: none;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .add-to-cart {
+            background: var(--forest);
+            color: white;
+            border: none;
+            padding: 14px 38px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 4px 12px rgba(29,80,58,0.2);
+        }
+        .add-to-cart:hover {
+            background: var(--forest-deep);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(29,80,58,0.25);
+        }
+
+        /* ----- FEATURES & SPECS ----- */
+        .product-features {
+            margin: 60px 0 50px;
+        }
+        .features-title, .details-title, .reviews-title, .similar-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 34px;
+            font-weight: 400;
+            margin-bottom: 28px;
+            letter-spacing: -0.3px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 28px;
+        }
+        .feature-card {
+            background: white;
+            padding: 24px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 14px;
+            color: var(--forest);
+        }
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .feature-card p {
+            color: #5e5e5e;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .product-details {
+            background: white;
+            border-radius: 28px;
+            padding: 32px 40px;
+            margin: 40px 0;
+            box-shadow: var(--shadow-sm);
+        }
+        .product-details ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .product-details ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0e8e2;
+            font-size: 14px;
+        }
+        .product-details ul li strong {
+            color: var(--forest);
+            width: 120px;
+            display: inline-block;
+        }
+
+        /* ----- REVIEWS ----- */
+        .reviews-section {
+            margin: 60px 0;
+        }
+        .review-card {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .reviewer-name {
+            font-weight: 600;
+        }
+        .review-card .stars {
+            font-size: 13px;
+        }
+        .review-card p {
+            color: #4a4a4a;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* ----- SIMILAR PRODUCTS ----- */
+        .similar-products {
+            margin: 60px 0 30px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 28px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: var(--shadow-sm);
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+        .product-card-image {
+            height: 220px;
+            background: #f3ede8;
+            overflow: hidden;
+        }
+        .product-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .product-card:hover .product-card-image img {
+            transform: scale(1.03);
+        }
+        .product-card-info {
+            padding: 18px;
+        }
+        .product-card-title {
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 15px;
+            line-height: 1.3;
+        }
+        .product-card-price {
+            color: var(--forest);
+            font-weight: 600;
+            font-size: 16px;
+            margin: 8px 0;
+        }
+        .btn {
+            display: inline-block;
+            background: transparent;
+            color: var(--forest);
+            border: 1.5px solid var(--forest);
+            padding: 8px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 12px;
+            transition: all 0.25s;
+        }
+        .btn:hover {
+            background: var(--forest);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ----- NEWSLETTER (index style) ----- */
+        .newsletter-block {
+            background: var(--blush);
+            padding: 70px 20px;
+            text-align: center;
+            margin: 50px 0 0;
+            border-radius: 48px;
+        }
+        .newsletter-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            font-weight: 400;
+            margin-bottom: 16px;
+            color: var(--forest);
+        }
+        .newsletter-text {
+            color: #5a5a5a;
+            max-width: 520px;
+            margin: 0 auto 32px;
+            font-size: 16px;
+        }
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 60px;
+            padding: 5px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+        }
+        .newsletter-input {
+            flex: 1;
+            padding: 14px 22px;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+            outline: none;
+        }
+        .newsletter-btn {
+            padding: 12px 32px;
+            background: var(--forest);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .newsletter-btn:hover {
+            background: var(--forest-deep);
+            transform: scale(0.97);
+        }
+
+        /* ----- FOOTER (EXACTLY AS INDEX.HTML) ----- */
+        .footer {
+            background: var(--forest-deep);
+            color: white;
+            position: relative;
+            margin-top: 60px;
+            overflow: hidden;
+        }
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 400px; height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.06), transparent 70%);
+        }
+        .container-footer { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .footer-top {
+            background: #143726;
+            padding: 50px 0;
+        }
+        .newsletter-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .newsletter-content { flex: 1; min-width: 300px; }
+        .newsletter-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; margin-bottom: 8px; }
+        .newsletter-content p { color: #aaa; font-size: 14px; }
+        .newsletter-form.footer-form {
+            flex: 1; min-width: 300px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            border-radius: 50px;
+            padding: 6px;
+        }
+        .newsletter-form.footer-form .newsletter-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            outline: none;
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .newsletter-form.footer-form .newsletter-input::placeholder { color: rgba(255,255,255,0.5); }
+        .newsletter-form.footer-form .newsletter-btn {
+            padding: 14px 30px;
+            background: var(--blush);
+            color: var(--forest);
+            border: none;
+            border-radius: 44px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .newsletter-form.footer-form .newsletter-btn:hover { background: var(--peach); transform: scale(0.97); }
+        .footer-main { padding: 70px 0 50px; }
+        .footer-columns { display: flex; flex-wrap: wrap; gap: 40px; }
+        .footer-column { flex: 1; min-width: 220px; }
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px; font-weight: 300;
+            margin-bottom: 18px;
+            background: linear-gradient(90deg, #fff, var(--blush));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+        .footer-text { color: #aaa; line-height: 1.7; font-size: 14px; margin-bottom: 22px; }
+        .contact-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; color: #aaa; font-size: 13px; }
+        .contact-item i { color: var(--blush); margin-top: 3px; }
+        .social-links { display: flex; gap: 10px; margin-top: 22px; }
+        .social-icon {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex; align-items: center; justify-content: center;
+            color: white; text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        .social-icon:hover { background: var(--blush); color: var(--forest); border-color: var(--blush); transform: translateY(-4px); }
+        .footer-column h4 {
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 26px;
+            color: var(--blush);
+            font-weight: 500;
+        }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 12px; }
+        .footer-column ul li a { color: #aaa; text-decoration: none; font-size: 14px; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+        .footer-column ul li a:hover { color: white; padding-left: 4px; }
+        .footer-accordion { border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; }
+        .footer-faq-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .footer-faq-item:last-child { border-bottom: none; }
+        .footer-faq-question {
+            padding: 14px 18px;
+            cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 13px; color: #ccc;
+            transition: background 0.3s;
+        }
+        .footer-faq-question:hover { background: rgba(255,255,255,0.05); }
+        .footer-faq-question i { transition: transform 0.3s; font-size: 11px; }
+        .footer-faq-item.active .footer-faq-question i { transform: rotate(180deg); }
+        .footer-faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s; }
+        .footer-faq-item.active .footer-faq-answer { max-height: 120px; padding: 0 18px 14px; }
+        .footer-faq-answer p { color: #888; font-size: 13px; line-height: 1.6; }
+        .footer-middle { padding: 36px 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .footer-middle-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px; }
+        .payment-methods h5, .app-download h5 { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--blush); margin-bottom: 16px; }
+        .payment-icons { display: flex; gap: 16px; }
+        .payment-icons i { font-size: 28px; color: #888; transition: all 0.3s; }
+        .payment-icons i:hover { color: white; transform: translateY(-3px); }
+        .app-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+        .app-button {
+            display: flex; align-items: center; gap: 10px;
+            background: rgba(255,255,255,0.07);
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none; color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+        .app-button:hover { background: rgba(255,255,255,0.14); transform: translateY(-3px); }
+        .app-button i { font-size: 22px; }
+        .app-button span { display: flex; flex-direction: column; }
+        .app-button small { font-size: 10px; opacity: 0.7; }
+        .app-button strong { font-size: 13px; }
+        .footer-bottom { padding: 24px 0; }
+        .footer-bottom-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .copyright p { color: #666; font-size: 13px; }
+        .back-to-top { display: flex; align-items: center; gap: 10px; cursor: pointer; color: #888; font-size: 13px; transition: all 0.3s; }
+        .back-to-top:hover { color: var(--blush); transform: translateY(-3px); }
+        .back-to-top i {
+            width: 30px; height: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s; font-size: 11px;
+        }
+        .back-to-top:hover i { background: var(--blush); color: var(--forest); border-color: var(--blush); }
+        .scroll-top {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 48px; height: 48px;
+            background: var(--forest);
+            color: white;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s;
+            z-index: 1000;
+            font-size: 16px;
+            box-shadow: 0 6px 24px rgba(29,80,58,0.35);
+        }
+        .scroll-top.active { opacity: 1; visibility: visible; }
+        .scroll-top:hover { background: var(--forest-deep); transform: translateY(-4px); }
+        @media (max-width: 900px) {
+            .navbar { padding: 18px 24px; }
+            .search-container { display: none; }
+            .container { padding: 24px 20px; }
+            .product-title { font-size: 32px; }
+            .main-image { height: 380px; }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar (exactly as index.html) -->
+<nav class="navbar" id="navbar">
+    <a href="index.html" class="logo">OneFit Clothing</a>
+    <div class="search-container">
+        <input type="text" placeholder="Search products..." id="searchInput">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+    <div class="nav-links">
+        <div class="links">
+            <a href="index.html">Home</a>
+            <a href="tshirts.html">T-Shirts</a>
+            <a href="hoodies.html">Hoodies</a>
+            <a href="login.html">Login</a>
+        </div>
+        <div class="icons">
+            <a href="cart.html" class="icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="badge">2</span>
+            </a>
+            <a href="myaccount.html" class="icon">
+                <i class="fas fa-user"></i>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<main class="container">
+    <!-- Product Section -->
+    <div class="product-section">
+        <div class="product-gallery">
+            <div class="main-image">
+                <img src="OneFit Originals Hoodie 01.png" alt="OneFit Originals Hoodie">
+            </div>
+        </div>
+        <div class="product-info">
+            <h1 class="product-title">OneFit Originals Hoodie</h1>
+            <div class="product-price">RS: 3000.00</div>
+            <div class="product-rating">
+                <div class="stars">★★★★☆</div>
+                <span>(123 reviews)</span>
+            </div>
+            <div class="product-description">
+                <i class="fas fa-feather-alt" style="margin-right: 8px; color: var(--forest);"></i>
+                Introducing the OneFit Originals Hoodie — a staple piece that defines our brand's core values: confidence, comfort, and effortless style. Whether you're powering through your day or winding down, this hoodie delivers iconic streetwear vibes without compromising on coziness.
+            </div>
+            <div class="options-container">
+                <label class="option-label">SELECT SIZE</label>
+                <div class="size-options">
+                    <div class="size-option" data-size="S">S</div>
+                    <div class="size-option active" data-size="M">M</div>
+                    <div class="size-option" data-size="L">L</div>
+                    <div class="size-option" data-size="XL">XL</div>
+                    <div class="size-option" data-size="XXL">XXL</div>
+                </div>
+                <div class="quantity-selector">
+                    <label class="option-label">QUANTITY</label>
+                    <button class="quantity-btn" id="decrQty">−</button>
+                    <input type="text" class="quantity-input" id="qtyInput" value="1" readonly>
+                    <button class="quantity-btn" id="incrQty">+</button>
+                </div>
+                <button class="add-to-cart" id="addToCartBtn"><i class="fas fa-shopping-bag"></i> Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <div class="product-features">
+        <h2 class="features-title">Product Features</h2>
+        <div class="features-grid">
+            <div class="feature-card"><div class="feature-icon">👕</div><h3>Signature Embroidered Logo</h3><p>Bold yet minimal OneFit branding stitched in front — it's not just a hoodie, it's your statement.</p></div>
+            <div class="feature-card"><div class="feature-icon">🧶</div><h3>Heavyweight Cotton Blend</h3><p>Premium fleece-lined material designed for warmth and long-lasting structure.</p></div>
+            <div class="feature-card"><div class="feature-icon">🎨</div><h3>Neutral Color Palette</h3><p>Available in timeless tones that make mixing and matching effortless.</p></div>
+            <div class="feature-card"><div class="feature-icon">💧</div><h3>Easy Care Fabric</h3><p>Machine washable and fade-resistant, because everyday wear should look fresh — every time.</p></div>
+        </div>
+    </div>
+
+    <!-- Specifications -->
+    <div class="product-details">
+        <h2 class="details-title">Product Specifications</h2>
+        <ul>
+            <li><strong>Material:</strong> 80% Combed Cotton, 20% Recycled Polyester</li>
+            <li><strong>Design:</strong> OneFit text logo in front</li>
+            <li><strong>Fit:</strong> Relaxed fit with structured shoulders and ribbed finish</li>
+            <li><strong>Care:</strong> Cold machine wash, do not bleach, tumble dry low</li>
+            <li><strong>Origin:</strong> Designed and Printed in Sri Lanka</li>
+        </ul>
+    </div>
+
+    <!-- Reviews -->
+    <div class="reviews-section">
+        <h2 class="reviews-title">Customer Reviews</h2>
+        <div class="review-card"><div class="review-header"><span class="reviewer-name">Navya M.</span><div class="stars">★★★★★</div></div><p>The OneFit hoodie is IT! Great quality, feels premium, and that text logo? Chef's kiss.</p></div>
+        <div class="review-card"><div class="review-header"><span class="reviewer-name">Warsha J.</span><div class="stars">★★★★★</div></div><p>This has become my staple hoodie — it elevates a simple outfit and still feels cozy. Obsessed!</p></div>
+        <div class="review-card"><div class="review-header"><span class="reviewer-name">Zhida L.</span><div class="stars">★★★★☆</div></div><p>Love the quality and design, but I'd love a cropped version too. Please make one!</p></div>
+    </div>
+
+    <!-- Similar Products -->
+    <div class="similar-products">
+        <h2 class="similar-title">You May Also Like</h2>
+        <div class="product-grid">
+            <div class="product-card"><div class="product-card-image"><img src="Anime Girl Printed Oversized T Shirt 02.png" alt="Anime Girl Printed Oversized T Shirt"></div><div class="product-card-info"><div class="product-card-title">Anime Girl Oversized Tee</div><div class="product-card-price">RS: 2000.00</div><a href="shirt3.html" class="btn">View Product</a></div></div>
+            <div class="product-card"><div class="product-card-image"><img src="Brown Based Tiny Polkadot Printed Hoodie 02.png" alt="Brown Based Tiny Polkadot Printed Hoodie"></div><div class="product-card-info"><div class="product-card-title">Brown Polkadot Hoodie</div><div class="product-card-price">RS: 2000.00</div><a href="hoodie3.html" class="btn">View Product</a></div></div>
+            <div class="product-card"><div class="product-card-image"><img src="Inferno Edge Tee 01.png" alt="Inferno Edge Tee"></div><div class="product-card-info"><div class="product-card-title">Inferno Edge Tee</div><div class="product-card-price">RS: 2200.00</div><a href="shirt1.html" class="btn">View Product</a></div></div>
+            <div class="product-card"><div class="product-card-image"><img src="Happiness Navy Blue T Shirt 01.png" alt="Happiness Navy Blue T Shirt"></div><div class="product-card-info"><div class="product-card-title">Happiness Navy Tee</div><div class="product-card-price">RS: 1200.00</div><a href="shirt2.html" class="btn">View Product</a></div></div>
+        </div>
+    </div>
+
+    <!-- Newsletter Block -->
+    <div class="newsletter-block">
+        <h2 class="newsletter-title">Stay in the <em style="color: var(--forest); font-style: italic;">Loop</em></h2>
+        <p class="newsletter-text">Subscribe and get 10% off your first purchase. Be the first to know about new arrivals and exclusive offers.</p>
+        <div class="newsletter-form">
+            <input type="email" class="newsletter-input" id="newsMainEmail" placeholder="Your email address…">
+            <button class="newsletter-btn" id="mainSubscribeBtn">Subscribe</button>
+        </div>
+    </div>
+</main>
+
+<!-- ========== FOOTER (EXACTLY AS INDEX.HTML) ========== -->
+<footer class="footer">
+    <div class="footer-top">
+        <div class="container-footer">
+            <div class="newsletter-wrapper">
+                <div class="newsletter-content">
+                    <h3>Be the first to get Updates & Offers!</h3>
+                    <p>Subscribe to our newsletter and get 10% off your first purchase</p>
+                </div>
+                <div class="newsletter-form footer-form">
+                    <input type="email" class="newsletter-input" id="footerEmail" placeholder="Your email address">
+                    <button class="newsletter-btn" id="footerSubscribeBtn">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-main">
+        <div class="container-footer">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <div class="footer-logo">OneFit Clothing</div>
+                    <p class="footer-text">Elevate your wardrobe with our premium collection of printed t-shirts and hoodies designed exclusively for modern women.</p>
+                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>123 Fashion Street, Colombo 07, Sri Lanka</span></div>
+                    <div class="contact-item"><i class="fas fa-phone-alt"></i><span>+94 11 222 3333</span></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i><span>support@onefitclothing.com</span></div>
+                    <div class="social-links">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Orders</h4>
+                    <ul><li><a href="index.html">Search</a></li><li><a href="tshirts.html">T shirts</a></li><li><a href="hoodies.html">Hoodies</a></li><li><a href="reviews.html">Reviews</a></li><li><a href="contactus.html">Contact Us</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul><li><a href="aboutus.html">About Us</a></li><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li><li><a href="size.html">Size Guide</a></li><li><a href="login.html">Log in</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>FAQs</h4>
+                    <div class="footer-accordion">
+                        <div class="footer-faq-item"><div class="footer-faq-question"><span>Shipping Information</span><i class="fas fa-chevron-down"></i></div><div class="footer-faq-answer"><p>We offer free shipping on all orders over RS: 5000.00. Standard delivery takes 3-5 business days.</p></div></div>
+                        <div class="footer-faq-item"><div class="footer-faq-question"><span>Return Policy</span><i class="fas fa-chevron-down"></i></div><div class="footer-faq-answer"><p>We accept returns within 30 days of purchase. Items must be unused with original tags.</p></div></div>
+                        <div class="footer-faq-item"><div class="footer-faq-question"><span>Size Guide</span><i class="fas fa-chevron-down"></i></div><div class="footer-faq-answer"><p>Please refer to our size chart on each product page for accurate measurements.</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-middle">
+        <div class="container-footer">
+            <div class="footer-middle-content">
+                <div class="payment-methods"><h5>Payment Methods</h5><div class="payment-icons"><i class="fab fa-cc-visa"></i><i class="fab fa-cc-mastercard"></i><i class="fab fa-cc-paypal"></i><i class="fab fa-cc-apple-pay"></i></div></div>
+                <div class="app-download"><h5>Download Our App</h5><div class="app-buttons"><a href="#" class="app-button"><i class="fab fa-apple"></i><span><small>Download on the</small><strong>App Store</strong></span></a><a href="#" class="app-button"><i class="fab fa-google-play"></i><span><small>GET IT ON</small><strong>Google Play</strong></span></a></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container-footer">
+            <div class="footer-bottom-content">
+                <div class="copyright"><p>&copy; 2025 OneFit Clothing. All Rights Reserved.</p></div>
+                <div class="back-to-top" id="backToTop"><span>Back to top</span><i class="fas fa-chevron-up"></i></div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="scroll-top" id="scrollTopBtn"><i class="fas fa-arrow-up"></i></div>
+
+<script>
+    // navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if(window.scrollY > 50) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        if(window.scrollY > 400) scrollBtn.classList.add('active');
+        else scrollBtn.classList.remove('active');
+    });
+    document.getElementById('scrollTopBtn')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    document.getElementById('backToTop')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // size selection
+    let selectedSize = 'M';
+    document.querySelectorAll('.size-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.size-option').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedSize = btn.getAttribute('data-size');
+        });
+    });
+
+    // quantity
+    const qtyInput = document.getElementById('qtyInput');
+    document.getElementById('incrQty').addEventListener('click', () => { let v = parseInt(qtyInput.value); qtyInput.value = v + 1; });
+    document.getElementById('decrQty').addEventListener('click', () => { let v = parseInt(qtyInput.value); if(v > 1) qtyInput.value = v - 1; });
+
+    // add to cart
+    document.getElementById('addToCartBtn').addEventListener('click', () => {
+        const qty = qtyInput.value;
+        alert(`🛍️ Added to cart: ${qty} x OneFit Originals Hoodie (Size: ${selectedSize})`);
+        const badge = document.querySelector('.badge');
+        if(badge) badge.innerText = parseInt(badge.innerText) + parseInt(qty);
+    });
+
+    // footer FAQ accordion
+    document.querySelectorAll('.footer-faq-item').forEach(item => {
+        const question = item.querySelector('.footer-faq-question');
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            document.querySelectorAll('.footer-faq-item').forEach(i => i.classList.remove('active'));
+            if (!isActive) item.classList.add('active');
+        });
+    });
+
+    // newsletter subscriptions
+    document.getElementById('footerSubscribeBtn')?.addEventListener('click', () => {
+        const email = document.getElementById('footerEmail')?.value;
+        if(email) alert(`Thanks for subscribing! 10% discount code: ONEFIT10`);
+        else alert('Please enter a valid email.');
+    });
+    document.getElementById('mainSubscribeBtn')?.addEventListener('click', () => {
+        const email = document.getElementById('newsMainEmail')?.value;
+        if(email) alert(`You're in! Enjoy 10% off your first order.`);
+        else alert('Please enter your email address.');
+    });
+    // search demo
+    document.querySelector('.search-container button')?.addEventListener('click', () => alert(`Search for "${document.getElementById('searchInput')?.value}" — explore our hoodies!`));
+</script>
+</body>
+</html>

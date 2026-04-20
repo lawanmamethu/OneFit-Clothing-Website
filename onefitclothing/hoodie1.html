@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>OneFit Clothing | Mocha Cozy Hoodie</title>
+    <!-- Google Fonts + FontAwesome (matching index.html) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --forest: #1D503A;
+            --forest-deep: #0f2e20;
+            --blush: #F9E4DA;
+            --peach: #F9C6A7;
+            --cream: #FDF6F0;
+            --red: #FF6B6B;
+            --text: #1a1a1a;
+            --shadow-sm: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
+            --shadow-md: 0 20px 35px -12px rgba(29,80,58,0.12);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ----- NAVBAR (exactly from index.html) ----- */
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 22px 60px;
+            background: rgba(253, 246, 240, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(29,80,58,0.08);
+            transition: padding 0.3s ease, box-shadow 0.3s;
+        }
+        .navbar.scrolled { padding: 12px 60px; box-shadow: 0 6px 28px rgba(29,80,58,0.1); }
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 30px;
+            font-weight: 600;
+            color: var(--forest);
+            text-decoration: none;
+            margin-right: 50px;
+            letter-spacing: -0.5px;
+        }
+        .search-container {
+            position: relative;
+            width: 280px;
+            margin-right: 50px;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 11px 42px 11px 18px;
+            border-radius: 50px;
+            border: 1.5px solid rgba(29,80,58,0.15);
+            background: white;
+            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            transition: 0.3s;
+            outline: none;
+        }
+        .search-container input:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(29,80,58,0.08); }
+        .search-container button {
+            position: absolute; right: 14px; top: 50%;
+            transform: translateY(-50%);
+            background: none; border: none;
+            color: var(--forest); cursor: pointer;
+        }
+        .nav-links { display: flex; flex-grow: 1; justify-content: space-between; align-items: center; }
+        .links { display: flex; gap: 32px; }
+        .links a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+        .links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1.5px;
+            background: var(--forest);
+            transition: width 0.3s;
+        }
+        .links a:hover { color: var(--forest); }
+        .links a:hover::after { width: 100%; }
+        .icons { display: flex; gap: 22px; align-items: center; }
+        .icon {
+            position: relative;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .icon:hover { color: var(--forest); transform: scale(1.08); }
+        .badge {
+            position: absolute; top: -8px; right: -8px;
+            background: var(--forest); color: white;
+            border-radius: 50%; width: 17px; height: 17px;
+            font-size: 10px; display: flex;
+            align-items: center; justify-content: center;
+            font-weight: 600;
+        }
+
+        /* ----- PRODUCT PAGE STYLES (elegant & cohesive) ----- */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 40px 32px 60px;
+        }
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 48px;
+            margin-bottom: 80px;
+        }
+        .gallery {
+            flex: 1.2;
+            min-width: 280px;
+        }
+        .main-image-card {
+            background: #f8f2ec;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
+        }
+        .main-image-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s;
+        }
+        .thumbnail-strip {
+            display: flex;
+            gap: 14px;
+            margin-top: 16px;
+        }
+        .thumbnail {
+            width: 85px;
+            height: 85px;
+            background: #f0eae4;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            opacity: 0.7;
+        }
+        .thumbnail.active {
+            border-color: var(--forest);
+            opacity: 1;
+        }
+        .thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+        .product-details {
+            flex: 1;
+            min-width: 300px;
+        }
+        .product-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+        .price {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--forest);
+            margin-bottom: 16px;
+        }
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .stars { color: #e6a817; font-size: 15px; letter-spacing: 2px; }
+        .description {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #4a4a4a;
+            margin-bottom: 32px;
+            background: #fff8f3;
+            padding: 18px 20px;
+            border-radius: 20px;
+            border-left: 4px solid var(--peach);
+        }
+        .size-section { margin-bottom: 28px; }
+        .option-label {
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: block;
+            color: var(--forest);
+        }
+        .size-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .size-btn {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 10px 22px;
+            border-radius: 60px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .size-btn.active {
+            background: var(--forest);
+            border-color: var(--forest);
+            color: white;
+        }
+        .quantity-wrap {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+        .quantity-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 60px;
+            background: white;
+        }
+        .qty-btn {
+            width: 42px;
+            height: 48px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .qty-input {
+            width: 60px;
+            text-align: center;
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            outline: none;
+        }
+        .add-to-cart-btn {
+            background: var(--forest);
+            color: white;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 4px 12px rgba(29,80,58,0.2);
+        }
+        .add-to-cart-btn:hover {
+            background: var(--forest-deep);
+            transform: translateY(-2px);
+        }
+        .features-spec {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            background: white;
+            border-radius: 32px;
+            padding: 40px;
+            margin: 50px 0;
+            box-shadow: var(--shadow-sm);
+        }
+        .features-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px,1fr));
+            gap: 28px;
+        }
+        .feature-item {
+            display: flex;
+            gap: 14px;
+        }
+        .feature-icon {
+            font-size: 28px;
+            background: var(--blush);
+            width: 48px;
+            height: 48px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--forest);
+        }
+        .spec-box {
+            flex: 0.8;
+            background: #fefaf7;
+            border-radius: 24px;
+            padding: 24px;
+        }
+        .spec-list { list-style: none; }
+        .spec-list li { padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; gap: 12px; font-size: 14px; }
+        .spec-list li strong { width: 100px; color: var(--forest); }
+        .reviews-section {
+            margin: 40px 0 60px;
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 34px;
+            font-weight: 400;
+            margin-bottom: 28px;
+        }
+        .review-card {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+        }
+        .similar-products {
+            margin: 60px 0 30px;
+        }
+        .product-scroll {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 28px;
+        }
+        .sim-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: 0.3s;
+            box-shadow: var(--shadow-sm);
+        }
+        .sim-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+        .sim-img { height: 220px; background: #f3ede8; overflow: hidden; }
+        .sim-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .sim-card:hover .sim-img img { transform: scale(1.03); }
+        .sim-info { padding: 18px; }
+        .sim-name { font-weight: 600; margin-bottom: 6px; }
+        .sim-price { color: var(--forest); font-weight: 600; margin: 8px 0; }
+        .sim-btn {
+            background: transparent;
+            border: 1px solid var(--forest);
+            border-radius: 40px;
+            padding: 6px 14px;
+            font-size: 12px;
+            text-decoration: none;
+            display: inline-block;
+            color: var(--forest);
+            transition: 0.2s;
+        }
+        .sim-btn:hover { background: var(--forest); color: white; }
+
+        /* ----- FOOTER (EXACT MATCH WITH INDEX.HTML) ----- */
+        .footer {
+            background: var(--forest-deep);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 400px; height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.06), transparent 70%);
+        }
+        .container-footer { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .footer-top {
+            background: #143726;
+            padding: 50px 0;
+        }
+        .newsletter-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .newsletter-content { flex: 1; min-width: 300px; }
+        .newsletter-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; margin-bottom: 8px; }
+        .newsletter-content p { color: #aaa; font-size: 14px; }
+        .newsletter-form.footer-form {
+            flex: 1; min-width: 300px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            border-radius: 50px;
+            padding: 6px;
+        }
+        .newsletter-form.footer-form .newsletter-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            outline: none;
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .newsletter-form.footer-form .newsletter-input::placeholder { color: rgba(255,255,255,0.5); }
+        .newsletter-form.footer-form .newsletter-btn {
+            padding: 14px 30px;
+            background: var(--blush);
+            color: var(--forest);
+            border: none;
+            border-radius: 44px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .newsletter-form.footer-form .newsletter-btn:hover { background: var(--peach); transform: scale(0.97); }
+        .footer-main { padding: 70px 0 50px; }
+        .footer-columns { display: flex; flex-wrap: wrap; gap: 40px; }
+        .footer-column { flex: 1; min-width: 220px; }
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px; font-weight: 300;
+            margin-bottom: 18px;
+            background: linear-gradient(90deg, #fff, var(--blush));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+        .footer-text { color: #aaa; line-height: 1.7; font-size: 14px; margin-bottom: 22px; }
+        .contact-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; color: #aaa; font-size: 13px; }
+        .contact-item i { color: var(--blush); margin-top: 3px; }
+        .social-links { display: flex; gap: 10px; margin-top: 22px; }
+        .social-icon {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex; align-items: center; justify-content: center;
+            color: white; text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        .social-icon:hover { background: var(--blush); color: var(--forest); border-color: var(--blush); transform: translateY(-4px); }
+        .footer-column h4 {
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 26px;
+            color: var(--blush);
+            font-weight: 500;
+        }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 12px; }
+        .footer-column ul li a { color: #aaa; text-decoration: none; font-size: 14px; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+        .footer-column ul li a:hover { color: white; padding-left: 4px; }
+        .footer-accordion { border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; }
+        .footer-faq-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .footer-faq-item:last-child { border-bottom: none; }
+        .footer-faq-question {
+            padding: 14px 18px;
+            cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 13px; color: #ccc;
+            transition: background 0.3s;
+        }
+        .footer-faq-question:hover { background: rgba(255,255,255,0.05); }
+        .footer-faq-question i { transition: transform 0.3s; font-size: 11px; }
+        .footer-faq-item.active .footer-faq-question i { transform: rotate(180deg); }
+        .footer-faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s; }
+        .footer-faq-item.active .footer-faq-answer { max-height: 120px; padding: 0 18px 14px; }
+        .footer-faq-answer p { color: #888; font-size: 13px; line-height: 1.6; }
+        .footer-middle { padding: 36px 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .footer-middle-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px; }
+        .payment-methods h5, .app-download h5 { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--blush); margin-bottom: 16px; }
+        .payment-icons { display: flex; gap: 16px; }
+        .payment-icons i { font-size: 28px; color: #888; transition: all 0.3s; }
+        .payment-icons i:hover { color: white; transform: translateY(-3px); }
+        .app-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+        .app-button {
+            display: flex; align-items: center; gap: 10px;
+            background: rgba(255,255,255,0.07);
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none; color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+        .app-button:hover { background: rgba(255,255,255,0.14); transform: translateY(-3px); }
+        .app-button i { font-size: 22px; }
+        .app-button span { display: flex; flex-direction: column; }
+        .app-button small { font-size: 10px; opacity: 0.7; }
+        .app-button strong { font-size: 13px; }
+        .footer-bottom { padding: 24px 0; }
+        .footer-bottom-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .copyright p { color: #666; font-size: 13px; }
+        .back-to-top { display: flex; align-items: center; gap: 10px; cursor: pointer; color: #888; font-size: 13px; transition: all 0.3s; }
+        .back-to-top:hover { color: var(--blush); transform: translateY(-3px); }
+        .back-to-top i {
+            width: 30px; height: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s; font-size: 11px;
+        }
+        .back-to-top:hover i { background: var(--blush); color: var(--forest); border-color: var(--blush); }
+        .scroll-top {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 48px; height: 48px;
+            background: var(--forest);
+            color: white;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s;
+            z-index: 1000;
+            font-size: 16px;
+            box-shadow: 0 6px 24px rgba(29,80,58,0.35);
+        }
+        .scroll-top.active { opacity: 1; visibility: visible; }
+        .scroll-top:hover { background: var(--forest-deep); transform: translateY(-4px); }
+        @media (max-width: 900px) {
+            .navbar { padding: 18px 24px; }
+            .search-container { display: none; }
+            .container { padding: 24px 20px; }
+            .footer-main { padding: 40px 20px; }
+            .footer-columns { gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR (identical to index) -->
+<nav class="navbar" id="navbar">
+    <a href="index.html" class="logo">OneFit Clothing</a>
+    <div class="search-container">
+        <input type="text" placeholder="Search products…" id="searchInput">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+    <div class="nav-links">
+        <div class="links">
+            <a href="index.html">Home</a>
+            <a href="tshirts.html">T-Shirts</a>
+            <a href="hoodies.html">Hoodies</a>
+            <a href="login.html">Login</a>
+        </div>
+        <div class="icons">
+            <a href="cart.html" class="icon"><i class="fas fa-shopping-cart"></i><span class="badge">2</span></a>
+            <a href="myaccount.html" class="icon"><i class="fas fa-user"></i></a>
+        </div>
+    </div>
+</nav>
+
+<main class="container">
+    <!-- product section -->
+    <div class="product-grid">
+        <div class="gallery">
+            <div class="main-image-card"><img id="mainProductImg" src="Mocha Cozy Hoodie 03.png" alt="Mocha Cozy Hoodie"></div>
+            <div class="thumbnail-strip">
+                <div class="thumbnail active" data-img="Mocha Cozy Hoodie 03.png"><img src="Mocha Cozy Hoodie 03.png" alt="view1"></div>
+                <div class="thumbnail" data-img="Mocha Cozy Hoodie 01.png"><img src="Mocha Cozy Hoodie 01.png" alt="view2"></div>
+                <div class="thumbnail" data-img="Mocha Cozy Hoodie 02.png"><img src="Mocha Cozy Hoodie 02.png" alt="view3"></div>
+            </div>
+        </div>
+        <div class="product-details">
+            <h1 class="product-title">Mocha Cozy Hoodie</h1>
+            <div class="price">RS: 2,550.00</div>
+            <div class="rating"><div class="stars">★★★★☆</div><span>(120 reviews)</span></div>
+            <div class="description"><i class="fas fa-feather-alt" style="margin-right: 8px; color: var(--forest);"></i> Wrap yourself in comfort with the Mocha Cozy Hoodie — the ultimate blend of warmth, softness, and effortless style. Neutral mocha tone, relaxed drop shoulder fit.</div>
+            <div class="size-section">
+                <span class="option-label">SELECT SIZE</span>
+                <div class="size-options"><div class="size-btn" data-size="S">S</div><div class="size-btn active" data-size="M">M</div><div class="size-btn" data-size="L">L</div><div class="size-btn" data-size="XL">XL</div><div class="size-btn" data-size="XXL">XXL</div></div>
+            </div>
+            <div class="quantity-wrap">
+                <span class="option-label">QUANTITY</span>
+                <div class="quantity-box"><button class="qty-btn" id="decrQty">−</button><input type="text" id="qtyInput" class="qty-input" value="1" readonly><button class="qty-btn" id="incrQty">+</button></div>
+                <button class="add-to-cart-btn" id="mainAddToCart"><i class="fas fa-shopping-bag"></i> Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- features -->
+    <div class="features-spec">
+        <div class="features-grid">
+            <div class="feature-item"><div class="feature-icon">☁️</div><div><h4>Ultra-Soft Interior</h4><p>Brushed fleece lining</p></div></div>
+            <div class="feature-item"><div class="feature-icon">🧥</div><div><h4>Drop Shoulder Fit</h4><p>Modern relaxed silhouette</p></div></div>
+            <div class="feature-item"><div class="feature-icon">🎨</div><div><h4>Neutral Mocha Tone</h4><p>Versatile & earthy</p></div></div>
+            <div class="feature-item"><div class="feature-icon">🧼</div><div><h4>Easy Care</h4><p>Machine washable</p></div></div>
+        </div>
+        <div class="spec-box"><h3>Specifications</h3><ul class="spec-list"><li><strong>Material</strong> 80% Cotton, 20% Polyester</li><li><strong>Color</strong> Warm Mocha Brown</li><li><strong>Fit</strong> Oversized with drop shoulders</li><li><strong>Pockets</strong> Front kangaroo pocket</li></ul></div>
+    </div>
+
+    <!-- reviews & similar -->
+    <div class="reviews-section"><h2 class="section-title">Customer <em style="color: var(--forest);">Reviews</em></h2>
+        <div class="review-card"><div class="review-header"><span class="review-name">Sneha T.</span><span class="review-stars">★★★★★</span></div><p>This hoodie is seriously soft! The mocha shade is so flattering.</p></div>
+        <div class="review-card"><div class="review-header"><span class="review-name">Sarah K.</span><span class="review-stars">★★★★★</span></div><p>Super warm but lightweight. Perfect oversized fit.</p></div>
+    </div>
+    <div class="similar-products"><h2 class="section-title">You May Also <em style="color: var(--forest);">Like</em></h2>
+        <div class="product-scroll">
+            <div class="sim-card"><div class="sim-img"><img src="Gray Marl Cropped Hoodie.png" alt="Gray Marl"></div><div class="sim-info"><div class="sim-name">Gray Marl Cropped Hoodie</div><div class="sim-price">RS: 3,350</div><a href="hoodie4.html" class="sim-btn">View</a></div></div>
+            <div class="sim-card"><div class="sim-img"><img src="Brown Based Tiny Polkadot Printed Hoodie 02.png" alt="Polkadot"></div><div class="sim-info"><div class="sim-name">Polkadot Hoodie</div><div class="sim-price">RS: 2,000</div><a href="hoodie3.html" class="sim-btn">View</a></div></div>
+        </div>
+    </div>
+</main>
+
+<!-- ========== FOOTER EXACTLY AS INDEX.HTML ========== -->
+<footer class="footer">
+    <div class="footer-top">
+        <div class="container-footer">
+            <div class="newsletter-wrapper">
+                <div class="newsletter-content">
+                    <h3>Be the first to get Updates & Offers!</h3>
+                    <p>Subscribe to our newsletter and get 10% off your first purchase</p>
+                </div>
+                <div class="newsletter-form footer-form">
+                    <input type="email" class="newsletter-input" id="footerEmail" placeholder="Your email address">
+                    <button class="newsletter-btn" id="footerSubscribeBtn">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-main">
+        <div class="container-footer">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <div class="footer-logo">OneFit Clothing</div>
+                    <p class="footer-text">Elevate your wardrobe with our premium collection of printed t-shirts and hoodies designed exclusively for modern women.</p>
+                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>123 Fashion Street, Colombo 07, Sri Lanka</span></div>
+                    <div class="contact-item"><i class="fas fa-phone-alt"></i><span>+94 11 222 3333</span></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i><span>support@onefitclothing.com</span></div>
+                    <div class="social-links">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Orders</h4>
+                    <ul><li><a href="index.html">Search</a></li><li><a href="tshirts.html">T-Shirts</a></li><li><a href="hoodies.html">Hoodies</a></li><li><a href="reviews.html">Reviews</a></li><li><a href="contactus.html">Contact Us</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul><li><a href="aboutus.html">About Us</a></li><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li><li><a href="size.html">Size Guide</a></li><li><a href="login.html">Log in</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>FAQs</h4>
+                    <div class="footer-accordion">
+                        <div class="footer-faq-item"><div class="footer-faq-question"><span>Shipping Information</span><i class="fas fa-chevron-down"></i></div><div class="footer-faq-answer"><p>We offer free shipping on all orders over RS: 5000.00. Standard delivery takes 3-5 business days.</p></div></div>
+                        <div class="footer-faq-item"><div class="footer-faq-question"><span>Return Policy</span><i class="fas fa-chevron-down"></i></div><div class="footer-faq-answer"><p>We accept returns within 30 days of purchase. Items must be unused with original tags.</p></div></div>
+                        <div class="footer-faq-item"><div class="footer-faq-question"><span>Size Guide</span><i class="fas fa-chevron-down"></i></div><div class="footer-faq-answer"><p>Please refer to our size chart on each product page for accurate measurements.</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-middle">
+        <div class="container-footer">
+            <div class="footer-middle-content">
+                <div class="payment-methods"><h5>Payment Methods</h5><div class="payment-icons"><i class="fab fa-cc-visa"></i><i class="fab fa-cc-mastercard"></i><i class="fab fa-cc-paypal"></i><i class="fab fa-cc-apple-pay"></i></div></div>
+                <div class="app-download"><h5>Download Our App</h5><div class="app-buttons"><a href="#" class="app-button"><i class="fab fa-apple"></i><span><small>Download on the</small><strong>App Store</strong></span></a><a href="#" class="app-button"><i class="fab fa-google-play"></i><span><small>GET IT ON</small><strong>Google Play</strong></span></a></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container-footer">
+            <div class="footer-bottom-content">
+                <div class="copyright"><p>&copy; 2025 OneFit Clothing. All Rights Reserved.</p></div>
+                <div class="back-to-top" id="backToTopFooter"><span>Back to top</span><i class="fas fa-chevron-up"></i></div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="scroll-top" id="scrollTopBtn"><i class="fas fa-arrow-up"></i></div>
+
+<script>
+    // navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 60); document.getElementById('scrollTopBtn').classList.toggle('active', window.scrollY > 400); });
+    document.getElementById('scrollTopBtn')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    document.getElementById('backToTopFooter')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // thumbnail
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    const mainImg = document.getElementById('mainProductImg');
+    thumbnails.forEach(t => t.addEventListener('click', () => { thumbnails.forEach(thumb => thumb.classList.remove('active')); t.classList.add('active'); if(t.dataset.img) mainImg.src = t.dataset.img; }));
+
+    // size & quantity
+    let selectedSize = 'M';
+    document.querySelectorAll('.size-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); selectedSize = btn.dataset.size; }); });
+    const qtyInput = document.getElementById('qtyInput'); document.getElementById('incrQty').addEventListener('click', () => { let v = parseInt(qtyInput.value); qtyInput.value = v + 1; }); document.getElementById('decrQty').addEventListener('click', () => { let v = parseInt(qtyInput.value); if(v > 1) qtyInput.value = v - 1; });
+    document.getElementById('mainAddToCart').addEventListener('click', () => { alert(`🛍️ Added to cart: ${qtyInput.value} x Mocha Cozy Hoodie (Size: ${selectedSize})`); const badge = document.querySelector('.badge'); if(badge) badge.innerText = parseInt(badge.innerText) + parseInt(qtyInput.value); });
+
+    // footer FAQ accordion (exact same as index)
+    document.querySelectorAll('.footer-faq-item').forEach(item => { item.querySelector('.footer-faq-question').addEventListener('click', () => { const wasActive = item.classList.contains('active'); document.querySelectorAll('.footer-faq-item').forEach(i => i.classList.remove('active')); if(!wasActive) item.classList.add('active'); }); });
+    // footer newsletter
+    document.getElementById('footerSubscribeBtn')?.addEventListener('click', () => { const email = document.getElementById('footerEmail').value; if(email) alert(`Thanks for subscribing! 10% discount code: ONEFIT10`); else alert('Please enter a valid email.'); });
+    // search alert
+    document.querySelector('.search-container button')?.addEventListener('click', () => alert(`Search for "${document.getElementById('searchInput')?.value}" — explore our hoodies!`));
+</script>
+</body>
+</html>

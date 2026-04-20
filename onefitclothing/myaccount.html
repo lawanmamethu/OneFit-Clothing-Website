@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneFit Clothing - My Account</title>
+    <link rel="shortcut icon" href="OneFit Clothing.png" type="image/png">
+    <!-- Homepage fonts & styles (Cormorant Garamond + DM Sans) to match index.html perfectly -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ----- ROOT VARIABLES (exactly as index.html) ----- */
+        :root {
+            --forest: #1D503A;
+            --forest-deep: #0f2e20;
+            --blush: #F9E4DA;
+            --peach: #F9C6A7;
+            --cream: #FDF6F0;
+            --red: #FF6B6B;
+            --text: #1a1a1a;
+            --shadow-sm: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
+            --shadow-md: 0 20px 35px -12px rgba(29,80,58,0.12);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ----- NAVBAR (identical to index.html) ----- */
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 22px 60px;
+            background: rgba(253, 246, 240, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(29,80,58,0.08);
+            transition: padding 0.3s ease, box-shadow 0.3s;
+        }
+        .navbar.scrolled { padding: 12px 60px; box-shadow: 0 6px 28px rgba(29,80,58,0.1); }
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 30px;
+            font-weight: 600;
+            color: var(--forest);
+            text-decoration: none;
+            margin-right: 50px;
+            letter-spacing: -0.5px;
+        }
+        .search-container {
+            position: relative;
+            width: 280px;
+            margin-right: 50px;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 11px 42px 11px 18px;
+            border-radius: 50px;
+            border: 1.5px solid rgba(29,80,58,0.15);
+            background: white;
+            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            transition: 0.3s;
+            outline: none;
+        }
+        .search-container input:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(29,80,58,0.08); }
+        .search-container button {
+            position: absolute; right: 14px; top: 50%;
+            transform: translateY(-50%);
+            background: none; border: none;
+            color: var(--forest); cursor: pointer;
+        }
+        .nav-links { display: flex; flex-grow: 1; justify-content: space-between; align-items: center; }
+        .links { display: flex; gap: 32px; }
+        .links a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+        .links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1.5px;
+            background: var(--forest);
+            transition: width 0.3s;
+        }
+        .links a:hover { color: var(--forest); }
+        .links a:hover::after { width: 100%; }
+        .icons { display: flex; gap: 22px; align-items: center; }
+        .icon {
+            position: relative;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .icon:hover { color: var(--forest); transform: scale(1.08); }
+        .badge {
+            position: absolute; top: -8px; right: -8px;
+            background: var(--forest); color: white;
+            border-radius: 50%; width: 17px; height: 17px;
+            font-size: 10px; display: flex;
+            align-items: center; justify-content: center;
+            font-weight: 600;
+        }
+
+        /* ----- MY ACCOUNT PAGE STYLES (elegant & cohesive) ----- */
+        .account-hero {
+            background: linear-gradient(135deg, var(--forest) 0%, #2a6b4e 100%);
+            padding: 60px 40px;
+            text-align: center;
+        }
+        .account-hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 52px;
+            font-weight: 400;
+            color: white;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+        .account-hero p {
+            font-size: 16px;
+            color: rgba(255,255,255,0.85);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container-account {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .account-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 24px 32px;
+            border-bottom: 1px solid #f0e8e2;
+        }
+        .account-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 400;
+            color: var(--forest);
+        }
+        .logout-btn {
+            background: transparent;
+            color: #888;
+            padding: 10px 22px;
+            border: 1.5px solid #e0d8d0;
+            border-radius: 60px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .logout-btn:hover {
+            background: var(--forest);
+            color: white;
+            border-color: var(--forest);
+            transform: translateY(-2px);
+        }
+
+        .account-tabs {
+            display: flex;
+            background: #fff;
+            border-bottom: 1px solid #f0e8e2;
+            padding: 0 32px;
+            gap: 8px;
+        }
+        .account-tab {
+            padding: 16px 28px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            color: #888;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            letter-spacing: 0.5px;
+        }
+        .account-tab:hover {
+            color: var(--forest);
+        }
+        .account-tab.active {
+            color: var(--forest);
+            border-bottom-color: var(--forest);
+        }
+
+        .account-content {
+            display: none;
+            padding: 32px;
+            animation: fadeContent 0.4s ease;
+        }
+        .account-content.active {
+            display: block;
+        }
+        @keyframes fadeContent {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group-account {
+            margin-bottom: 24px;
+        }
+        .form-group-account label {
+            font-weight: 500;
+            font-size: 13px;
+            color: #555;
+            display: block;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .form-group-account input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid #e8e0d8;
+            border-radius: 16px;
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        .form-group-account input:focus {
+            border-color: var(--forest);
+            box-shadow: 0 0 0 3px rgba(29, 80, 58, 0.08);
+            outline: none;
+        }
+
+        .form-buttons {
+            margin-top: 28px;
+            display: flex;
+            gap: 16px;
+        }
+        .save-btn {
+            background: var(--forest);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .save-btn:hover {
+            background: var(--forest-deep);
+            transform: translateY(-2px);
+        }
+        .cancel-btn {
+            background: #f0e8e2;
+            color: #555;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .cancel-btn:hover {
+            background: #e0d8d0;
+        }
+
+        .order-list {
+            list-style: none;
+        }
+        .order-list li {
+            padding: 16px 0;
+            border-bottom: 1px solid #f0e8e2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .order-list li:last-child {
+            border-bottom: none;
+        }
+        .order-status {
+            background: var(--peach);
+            color: var(--forest);
+            padding: 4px 12px;
+            border-radius: 60px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .order-status.delivered {
+            background: #d4e8de;
+        }
+        .order-status.processing {
+            background: var(--peach);
+        }
+
+        .track-btn {
+            background: var(--forest);
+            color: white;
+            padding: 12px 28px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 60px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 16px;
+        }
+        .track-btn:hover {
+            background: var(--forest-deep);
+            transform: translateY(-2px);
+        }
+
+        .wishlist-empty {
+            text-align: center;
+            padding: 50px 20px;
+            color: #888;
+        }
+        .wishlist-empty i {
+            font-size: 64px;
+            color: var(--peach);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        /* ----- FOOTER (EXACTLY AS INDEX.HTML) ----- */
+        .footer {
+            background: var(--forest-deep);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            margin-top: 60px;
+        }
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 400px; height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.06), transparent 70%);
+        }
+        .container-footer { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .footer-top {
+            background: #143726;
+            padding: 50px 0;
+        }
+        .newsletter-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .newsletter-content { flex: 1; min-width: 300px; }
+        .newsletter-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; margin-bottom: 8px; color: white; }
+        .newsletter-content p { color: #aaa; font-size: 14px; }
+        .newsletter-form.footer-form {
+            flex: 1; min-width: 300px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            border-radius: 50px;
+            padding: 6px;
+        }
+        .newsletter-form.footer-form .newsletter-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            outline: none;
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .newsletter-form.footer-form .newsletter-input::placeholder { color: rgba(255,255,255,0.5); }
+        .newsletter-form.footer-form .newsletter-btn {
+            padding: 14px 30px;
+            background: var(--blush);
+            color: var(--forest);
+            border: none;
+            border-radius: 44px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .newsletter-form.footer-form .newsletter-btn:hover { background: var(--peach); transform: scale(0.97); }
+        .footer-main { padding: 70px 0 50px; }
+        .footer-columns { display: flex; flex-wrap: wrap; gap: 40px; }
+        .footer-column { flex: 1; min-width: 220px; }
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px; font-weight: 300;
+            margin-bottom: 18px;
+            background: linear-gradient(90deg, #fff, var(--blush));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+        .footer-text { color: #aaa; line-height: 1.7; font-size: 14px; margin-bottom: 22px; }
+        .contact-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; color: #aaa; font-size: 13px; }
+        .contact-item i { color: var(--blush); margin-top: 3px; }
+        .social-links { display: flex; gap: 10px; margin-top: 22px; }
+        .social-icon {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex; align-items: center; justify-content: center;
+            color: white; text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        .social-icon:hover { background: var(--blush); color: var(--forest); border-color: var(--blush); transform: translateY(-4px); }
+        .footer-column h4 {
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 26px;
+            color: var(--blush);
+            font-weight: 500;
+        }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 12px; }
+        .footer-column ul li a { color: #aaa; text-decoration: none; font-size: 14px; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+        .footer-column ul li a:hover { color: white; padding-left: 4px; }
+        .footer-accordion { border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; }
+        .footer-faq-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .footer-faq-item:last-child { border-bottom: none; }
+        .footer-faq-question {
+            padding: 14px 18px;
+            cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 13px; color: #ccc;
+            transition: background 0.3s;
+        }
+        .footer-faq-question:hover { background: rgba(255,255,255,0.05); }
+        .footer-faq-question i { transition: transform 0.3s; font-size: 11px; }
+        .footer-faq-item.active .footer-faq-question i { transform: rotate(180deg); }
+        .footer-faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s; }
+        .footer-faq-item.active .footer-faq-answer { max-height: 120px; padding: 0 18px 14px; }
+        .footer-faq-answer p { color: #888; font-size: 13px; line-height: 1.6; }
+        .footer-middle { padding: 36px 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .footer-middle-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px; }
+        .payment-methods h5, .app-download h5 { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--blush); margin-bottom: 16px; }
+        .payment-icons { display: flex; gap: 16px; }
+        .payment-icons i { font-size: 28px; color: #888; transition: all 0.3s; }
+        .payment-icons i:hover { color: white; transform: translateY(-3px); }
+        .app-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+        .app-button {
+            display: flex; align-items: center; gap: 10px;
+            background: rgba(255,255,255,0.07);
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none; color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+        .app-button:hover { background: rgba(255,255,255,0.14); transform: translateY(-3px); }
+        .app-button i { font-size: 22px; }
+        .app-button span { display: flex; flex-direction: column; }
+        .app-button small { font-size: 10px; opacity: 0.7; }
+        .app-button strong { font-size: 13px; }
+        .footer-bottom { padding: 24px 0; }
+        .footer-bottom-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .copyright p { color: #666; font-size: 13px; }
+        .back-to-top { display: flex; align-items: center; gap: 10px; cursor: pointer; color: #888; font-size: 13px; transition: all 0.3s; }
+        .back-to-top:hover { color: var(--blush); transform: translateY(-3px); }
+        .back-to-top i {
+            width: 30px; height: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s; font-size: 11px;
+        }
+        .back-to-top:hover i { background: var(--blush); color: var(--forest); border-color: var(--blush); }
+        .scroll-top {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 48px; height: 48px;
+            background: var(--forest);
+            color: white;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s;
+            z-index: 1000;
+            font-size: 16px;
+            box-shadow: 0 6px 24px rgba(29,80,58,0.35);
+        }
+        .scroll-top.active { opacity: 1; visibility: visible; }
+        .scroll-top:hover { background: var(--forest-deep); transform: translateY(-4px); }
+
+        @media (max-width: 900px) {
+            .navbar { padding: 18px 24px; }
+            .search-container { display: none; }
+            .account-hero { padding: 40px 24px; }
+            .account-hero h1 { font-size: 38px; }
+            .container-account { margin: 20px; }
+            .account-tabs { padding: 0 16px; overflow-x: auto; }
+            .account-tab { padding: 14px 20px; white-space: nowrap; }
+            .account-content { padding: 24px; }
+            .footer-main { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar (exactly as index.html) -->
+<nav class="navbar" id="navbar">
+    <a href="index.html" class="logo">OneFit Clothing</a>
+    <div class="search-container">
+        <input type="text" placeholder="Search products..." id="searchInput">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+    <div class="nav-links">
+        <div class="links">
+            <a href="index.html">Home</a>
+            <a href="tshirts.html">T-Shirts</a>
+            <a href="hoodies.html">Hoodies</a>
+            <a href="login.html">Login</a>
+        </div>
+        <div class="icons">
+            <a href="cart.html" class="icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="badge">2</span>
+            </a>
+            <a href="myaccount.html" class="icon">
+                <i class="fas fa-user"></i>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="account-hero">
+    <h1>My Account</h1>
+    <p>Manage your profile, track orders, and view your purchase history.</p>
+</section>
+
+<!-- Account Dashboard -->
+<div class="container-account">
+    <div class="account-header">
+        <h2>Welcome Back!</h2>
+        <button class="logout-btn" onclick="showToast('Logged out successfully')">Log Out</button>
+    </div>
+
+    <div class="account-tabs">
+        <div class="account-tab active" data-tab="profile">Profile</div>
+        <div class="account-tab" data-tab="history">Purchase History</div>
+        <div class="account-tab" data-tab="tracking">Order Tracking</div>
+        <div class="account-tab" data-tab="wishlist">Wishlist</div>
+    </div>
+
+    <!-- Profile Tab -->
+    <div id="profile" class="account-content active">
+        <div class="form-group-account">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Enter Your Full Name">
+        </div>
+        <div class="form-group-account">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Enter Your Email Address">
+        </div>
+        <div class="form-group-account">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="Enter Your Phone Number">
+        </div>
+        <div class="form-buttons">
+            <button class="save-btn" onclick="showToast('Profile updated successfully')">Save Changes</button>
+            <button class="cancel-btn" onclick="showToast('Changes canceled')">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Purchase History Tab -->
+    <div id="history" class="account-content">
+        <ul class="order-list">
+            <li><span><strong>Bloom Wild T Shirt</strong> - RS: 2530.00</span> <span class="order-status delivered">Delivered</span></li>
+            <li><span><strong>OneFit Originals Hoodie</strong> - RS: 3000.00</span> <span class="order-status delivered">Delivered</span></li>
+            <li><span><strong>Inferno Edge Tee T-Shirt</strong> - RS: 2200.00</span> <span class="order-status processing">Processing</span></li>
+        </ul>
+    </div>
+
+    <!-- Order Tracking Tab -->
+    <div id="tracking" class="account-content">
+        <div class="form-group-account">
+            <label for="track-id">Enter Order ID or Product Name</label>
+            <input type="text" id="track-id" placeholder="e.g. Inferno Edge Tee T-Shirt">
+        </div>
+        <button class="track-btn" onclick="showToast('Order #Inferno Edge Tee T-Shirt is being prepared for shipping.')">Track Order</button>
+    </div>
+
+    <!-- Wishlist Tab -->
+    <div id="wishlist" class="account-content">
+        <div class="wishlist-empty">
+            <i class="far fa-heart"></i>
+            <p>Your wishlist is empty.</p>
+            <p style="font-size: 13px; margin-top: 8px;">Start adding your favorite items!</p>
+        </div>
+    </div>
+</div>
+
+<!-- ========== FOOTER (EXACTLY AS INDEX.HTML) ========== -->
+<footer class="footer">
+    <div class="footer-top">
+        <div class="container-footer">
+            <div class="newsletter-wrapper">
+                <div class="newsletter-content">
+                    <h3>Be the first to get Updates & Offers!</h3>
+                    <p>Subscribe to our newsletter and get 10% off your first purchase</p>
+                </div>
+                <div class="newsletter-form footer-form">
+                    <input type="email" class="newsletter-input" id="footerEmail" placeholder="Your email address">
+                    <button class="newsletter-btn" id="footerSubscribeBtn">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-main">
+        <div class="container-footer">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <div class="footer-logo">OneFit Clothing</div>
+                    <p class="footer-text">Elevate your wardrobe with our premium collection of printed t-shirts and hoodies designed exclusively for modern women.</p>
+                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>123 Fashion Street, Colombo 07, Sri Lanka</span></div>
+                    <div class="contact-item"><i class="fas fa-phone-alt"></i><span>+94 11 222 3333</span></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i><span>support@onefitclothing.com</span></div>
+                    <div class="social-links">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Orders</h4>
+                    <ul><li><a href="index.html">Search</a></li><li><a href="tshirts.html">T shirts</a></li><li><a href="hoodies.html">Hoodies</a></li><li><a href="reviews.html">Reviews</a></li><li><a href="contactus.html">Contact Us</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul><li><a href="aboutus.html">About Us</a></li><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li><li><a href="size.html">Size Guide</a></li><li><a href="login.html">Log in</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>FAQs</h4>
+                    <div class="footer-accordion">
+                        <div class="footer-faq-item"><div class="footer-faq-question"><span>Shipping Information</span><i class="fas fa-chevron-down"></i></div><div class="footer-faq-answer"><p>We offer free shipping on all orders over RS: 5000.00. Standard delivery takes 3-5 business days.</p></div></div>
+                        <div class="footer-faq-item"><div class="footer-faq-question"><span>Return Policy</span><i class="fas fa-chevron-down"></i></div><div class="footer-faq-answer"><p>We accept returns within 30 days of purchase. Items must be unused with original tags.</p></div></div>
+                        <div class="footer-faq-item"><div class="footer-faq-question"><span>Size Guide</span><i class="fas fa-chevron-down"></i></div><div class="footer-faq-answer"><p>Please refer to our size chart on each product page for accurate measurements.</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-middle">
+        <div class="container-footer">
+            <div class="footer-middle-content">
+                <div class="payment-methods"><h5>Payment Methods</h5><div class="payment-icons"><i class="fab fa-cc-visa"></i><i class="fab fa-cc-mastercard"></i><i class="fab fa-cc-paypal"></i><i class="fab fa-cc-apple-pay"></i></div></div>
+                <div class="app-download"><h5>Download Our App</h5><div class="app-buttons"><a href="#" class="app-button"><i class="fab fa-apple"></i><span><small>Download on the</small><strong>App Store</strong></span></a><a href="#" class="app-button"><i class="fab fa-google-play"></i><span><small>GET IT ON</small><strong>Google Play</strong></span></a></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container-footer">
+            <div class="footer-bottom-content">
+                <div class="copyright"><p>&copy; 2025 OneFit Clothing. All Rights Reserved.</p></div>
+                <div class="back-to-top" id="backToTopFooter"><span>Back to top</span><i class="fas fa-chevron-up"></i></div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="scroll-top" id="scrollTopBtn"><i class="fas fa-arrow-up"></i></div>
+
+<script>
+    // navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if(window.scrollY > 50) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        if(window.scrollY > 400) scrollBtn.classList.add('active');
+        else scrollBtn.classList.remove('active');
+    });
+    document.getElementById('scrollTopBtn')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    document.getElementById('backToTopFooter')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Tab switching functionality
+    const tabs = document.querySelectorAll('.account-tab');
+    const contents = document.querySelectorAll('.account-content');
+
+    function openTab(tabId) {
+        contents.forEach(content => content.classList.remove('active'));
+        tabs.forEach(tab => tab.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        const clickedTab = Array.from(tabs).find(tab => tab.getAttribute('data-tab') === tabId);
+        if (clickedTab) clickedTab.classList.add('active');
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            openTab(tabId);
+        });
+    });
+
+    function showToast(message) {
+        alert(message);
+    }
+
+    // footer FAQ accordion (exact same as index)
+    document.querySelectorAll('.footer-faq-item').forEach(item => {
+        const question = item.querySelector('.footer-faq-question');
+        question.addEventListener('click', () => {
+            const wasActive = item.classList.contains('active');
+            document.querySelectorAll('.footer-faq-item').forEach(i => i.classList.remove('active'));
+            if(!wasActive) item.classList.add('active');
+        });
+    });
+
+    // footer newsletter subscription
+    document.getElementById('footerSubscribeBtn')?.addEventListener('click', () => {
+        const email = document.getElementById('footerEmail')?.value;
+        if(email) alert(`Thanks for subscribing! 10% discount code: ONEFIT10`);
+        else alert('Please enter a valid email.');
+    });
+
+    // search demo
+    document.querySelector('.search-container button')?.addEventListener('click', () => {
+        const searchVal = document.getElementById('searchInput')?.value;
+        alert(`Searching for "${searchVal}" — discover your style!`);
+    });
+</script>
+</body>
+</html>

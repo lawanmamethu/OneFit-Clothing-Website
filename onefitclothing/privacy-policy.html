@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneFit Clothing - Privacy Policy</title>
+    <link rel="shortcut icon" href="OneFit Clothing.png" type="image/png">
+    <!-- Homepage fonts & styles (Cormorant Garamond + DM Sans) to match index.html perfectly -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ----- ROOT VARIABLES (exactly as index.html) ----- */
+        :root {
+            --forest: #1D503A;
+            --forest-deep: #0f2e20;
+            --blush: #F9E4DA;
+            --peach: #F9C6A7;
+            --cream: #FDF6F0;
+            --red: #FF6B6B;
+            --text: #1a1a1a;
+            --shadow-sm: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
+            --shadow-md: 0 20px 35px -12px rgba(29,80,58,0.12);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ----- NAVBAR (identical to index.html) ----- */
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 22px 60px;
+            background: rgba(253, 246, 240, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(29,80,58,0.08);
+            transition: padding 0.3s ease, box-shadow 0.3s;
+        }
+        .navbar.scrolled { padding: 12px 60px; box-shadow: 0 6px 28px rgba(29,80,58,0.1); }
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 30px;
+            font-weight: 600;
+            color: var(--forest);
+            text-decoration: none;
+            margin-right: 50px;
+            letter-spacing: -0.5px;
+        }
+        .search-container {
+            position: relative;
+            width: 280px;
+            margin-right: 50px;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 11px 42px 11px 18px;
+            border-radius: 50px;
+            border: 1.5px solid rgba(29,80,58,0.15);
+            background: white;
+            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            transition: 0.3s;
+            outline: none;
+        }
+        .search-container input:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(29,80,58,0.08); }
+        .search-container button {
+            position: absolute; right: 14px; top: 50%;
+            transform: translateY(-50%);
+            background: none; border: none;
+            color: var(--forest); cursor: pointer;
+        }
+        .nav-links { display: flex; flex-grow: 1; justify-content: space-between; align-items: center; }
+        .links { display: flex; gap: 32px; }
+        .links a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+        .links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1.5px;
+            background: var(--forest);
+            transition: width 0.3s;
+        }
+        .links a:hover { color: var(--forest); }
+        .links a:hover::after { width: 100%; }
+        .icons { display: flex; gap: 22px; align-items: center; }
+        .icon {
+            position: relative;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .icon:hover { color: var(--forest); transform: scale(1.08); }
+        .badge {
+            position: absolute; top: -8px; right: -8px;
+            background: var(--forest); color: white;
+            border-radius: 50%; width: 17px; height: 17px;
+            font-size: 10px; display: flex;
+            align-items: center; justify-content: center;
+            font-weight: 600;
+        }
+
+        /* ----- PRIVACY POLICY PAGE STYLES ----- */
+        .privacy-hero {
+            background: linear-gradient(135deg, var(--forest) 0%, #2a6b4e 100%);
+            padding: 70px 40px;
+            text-align: center;
+        }
+        .privacy-hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 58px;
+            font-weight: 400;
+            color: white;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+        .privacy-hero p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.85);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .container-privacy {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px 60px;
+        }
+
+        .privacy-content {
+            background: white;
+            padding: 48px;
+            border-radius: 32px;
+            box-shadow: var(--shadow-md);
+            margin-top: -40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .privacy-navigation {
+            background: var(--cream);
+            padding: 28px 32px;
+            border-radius: 24px;
+            margin-bottom: 40px;
+        }
+        .privacy-navigation h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--forest);
+            margin-bottom: 16px;
+        }
+        .privacy-navigation ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .privacy-navigation ul li a {
+            color: var(--forest);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            padding: 4px 12px;
+            border-radius: 60px;
+            background: white;
+            display: inline-block;
+        }
+        .privacy-navigation ul li a:hover {
+            background: var(--forest);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .privacy-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 400;
+            color: var(--forest);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--peach);
+        }
+        .privacy-content h2:first-of-type {
+            margin-top: 0;
+        }
+        .privacy-content p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 16px;
+            font-size: 15px;
+        }
+        .privacy-content ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+        .privacy-content ul li {
+            color: #555;
+            margin-bottom: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .privacy-content ul li strong {
+            color: var(--forest);
+        }
+        .effective-date {
+            font-style: italic;
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid #f0e8e2;
+            color: #888;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        /* ----- FOOTER (EXACTLY AS INDEX.HTML) ----- */
+        .footer {
+            background: var(--forest-deep);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 400px; height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.06), transparent 70%);
+        }
+        .container-footer { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .footer-top {
+            background: #143726;
+            padding: 50px 0;
+        }
+        .newsletter-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .newsletter-content { flex: 1; min-width: 300px; }
+        .newsletter-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; margin-bottom: 8px; color: white; }
+        .newsletter-content p { color: #aaa; font-size: 14px; }
+        .newsletter-form.footer-form {
+            flex: 1; min-width: 300px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            border-radius: 50px;
+            padding: 6px;
+        }
+        .newsletter-form.footer-form .newsletter-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            outline: none;
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .newsletter-form.footer-form .newsletter-input::placeholder { color: rgba(255,255,255,0.5); }
+        .newsletter-form.footer-form .newsletter-btn {
+            padding: 14px 30px;
+            background: var(--blush);
+            color: var(--forest);
+            border: none;
+            border-radius: 44px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .newsletter-form.footer-form .newsletter-btn:hover { background: var(--peach); transform: scale(0.97); }
+        .footer-main { padding: 70px 0 50px; }
+        .footer-columns { display: flex; flex-wrap: wrap; gap: 40px; }
+        .footer-column { flex: 1; min-width: 220px; }
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px; font-weight: 300;
+            margin-bottom: 18px;
+            background: linear-gradient(90deg, #fff, var(--blush));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+        .footer-text { color: #aaa; line-height: 1.7; font-size: 14px; margin-bottom: 22px; }
+        .contact-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; color: #aaa; font-size: 13px; }
+        .contact-item i { color: var(--blush); margin-top: 3px; }
+        .social-links { display: flex; gap: 10px; margin-top: 22px; }
+        .social-icon {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex; align-items: center; justify-content: center;
+            color: white; text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        .social-icon:hover { background: var(--blush); color: var(--forest); border-color: var(--blush); transform: translateY(-4px); }
+        .footer-column h4 {
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 26px;
+            color: var(--blush);
+            font-weight: 500;
+        }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 12px; }
+        .footer-column ul li a { color: #aaa; text-decoration: none; font-size: 14px; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+        .footer-column ul li a:hover { color: white; padding-left: 4px; }
+        .footer-accordion { border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; }
+        .footer-faq-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .footer-faq-item:last-child { border-bottom: none; }
+        .footer-faq-question {
+            padding: 14px 18px;
+            cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 13px; color: #ccc;
+            transition: background 0.3s;
+        }
+        .footer-faq-question:hover { background: rgba(255,255,255,0.05); }
+        .footer-faq-question i { transition: transform 0.3s; font-size: 11px; }
+        .footer-faq-item.active .footer-faq-question i { transform: rotate(180deg); }
+        .footer-faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s; }
+        .footer-faq-item.active .footer-faq-answer { max-height: 120px; padding: 0 18px 14px; }
+        .footer-faq-answer p { color: #888; font-size: 13px; line-height: 1.6; }
+        .footer-middle { padding: 36px 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .footer-middle-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px; }
+        .payment-methods h5, .app-download h5 { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--blush); margin-bottom: 16px; }
+        .payment-icons { display: flex; gap: 16px; }
+        .payment-icons i { font-size: 28px; color: #888; transition: all 0.3s; }
+        .payment-icons i:hover { color: white; transform: translateY(-3px); }
+        .app-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+        .app-button {
+            display: flex; align-items: center; gap: 10px;
+            background: rgba(255,255,255,0.07);
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none; color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+        .app-button:hover { background: rgba(255,255,255,0.14); transform: translateY(-3px); }
+        .app-button i { font-size: 22px; }
+        .app-button span { display: flex; flex-direction: column; }
+        .app-button small { font-size: 10px; opacity: 0.7; }
+        .app-button strong { font-size: 13px; }
+        .footer-bottom { padding: 24px 0; }
+        .footer-bottom-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .copyright p { color: #666; font-size: 13px; }
+        .back-to-top { display: flex; align-items: center; gap: 10px; cursor: pointer; color: #888; font-size: 13px; transition: all 0.3s; }
+        .back-to-top:hover { color: var(--blush); transform: translateY(-3px); }
+        .back-to-top i {
+            width: 30px; height: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s; font-size: 11px;
+        }
+        .back-to-top:hover i { background: var(--blush); color: var(--forest); border-color: var(--blush); }
+        .scroll-top {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 48px; height: 48px;
+            background: var(--forest);
+            color: white;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s;
+            z-index: 1000;
+            font-size: 16px;
+            box-shadow: 0 6px 24px rgba(29,80,58,0.35);
+        }
+        .scroll-top.active { opacity: 1; visibility: visible; }
+        .scroll-top:hover { background: var(--forest-deep); transform: translateY(-4px); }
+
+        @media (max-width: 900px) {
+            .navbar { padding: 18px 24px; }
+            .search-container { display: none; }
+            .privacy-hero { padding: 50px 24px; }
+            .privacy-hero h1 { font-size: 42px; }
+            .container-privacy { padding: 0 20px 40px; }
+            .privacy-content { padding: 28px; }
+            .privacy-navigation ul { flex-direction: column; gap: 8px; }
+            .footer-main { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar (exactly as index.html) -->
+<nav class="navbar" id="navbar">
+    <a href="index.html" class="logo">OneFit Clothing</a>
+    <div class="search-container">
+        <input type="text" placeholder="Search products..." id="searchInput">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+    <div class="nav-links">
+        <div class="links">
+            <a href="index.html">Home</a>
+            <a href="tshirts.html">T-Shirts</a>
+            <a href="hoodies.html">Hoodies</a>
+            <a href="login.html">Login</a>
+        </div>
+        <div class="icons">
+            <a href="cart.html" class="icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="badge">2</span>
+            </a>
+            <a href="myaccount.html" class="icon">
+                <i class="fas fa-user"></i>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="privacy-hero">
+    <h1>Privacy Policy</h1>
+    <p>Your privacy is important to us. Learn how we collect, use, and protect your information.</p>
+</section>
+
+<div class="container-privacy">
+    <div class="privacy-content">
+        <!-- Navigation -->
+        <div class="privacy-navigation">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#information-collected">Information We Collect</a></li>
+                <li><a href="#use-of-information">How We Use Your Information</a></li>
+                <li><a href="#sharing-information">Sharing Your Information</a></li>
+                <li><a href="#data-security">Data Security</a></li>
+                <li><a href="#cookies">Cookies and Tracking Technologies</a></li>
+                <li><a href="#your-rights">Your Rights and Choices</a></li>
+                <li><a href="#children">Children's Privacy</a></li>
+                <li><a href="#changes">Changes to This Privacy Policy</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <!-- Privacy Policy Content -->
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>Welcome to OneFit Clothing Store. We are committed to protecting your personal information and your right to privacy. This Privacy Policy describes how we collect, use, and share information when you use our website, products, and services.</p>
+            <p>By using our services, you agree to the terms of this Privacy Policy. Please read this Privacy Policy carefully to understand our practices regarding your personal information.</p>
+        </section>
+
+        <section id="information-collected">
+            <h2>Information We Collect</h2>
+            <p>We may collect various types of information, including:</p>
+            <ul>
+                <li><strong>Personal Information:</strong> This includes information that can identify you as an individual, such as your name, email address, phone number, postal address, and payment information.</li>
+                <li><strong>Usage Data:</strong> We automatically collect certain information about how you interact with our services, including IP address, browser type, pages viewed, time spent on pages, and referring URLs.</li>
+                <li><strong>Device Information:</strong> Information about the device you use to access our services, including device type, operating system, and unique device identifiers.</li>
+                <li><strong>Communications:</strong> When you contact us directly, we keep a record of your communication to help solve any issues you might be facing.</li>
+            </ul>
+        </section>
+
+        <section id="use-of-information">
+            <h2>How We Use Your Information</h2>
+            <p>We use the information we collect for various purposes, including:</p>
+            <ul>
+                <li>Providing, maintaining, and improving our services</li>
+                <li>Processing transactions and sending related information</li>
+                <li>Responding to your comments, questions, and requests</li>
+                <li>Sending you technical notices, updates, security alerts, and support messages</li>
+                <li>Personalizing your experience with our services</li>
+                <li>Developing new products and services</li>
+                <li>Monitoring and analyzing trends, usage, and activities in connection with our services</li>
+                <li>Detecting, investigating, and preventing fraudulent transactions and other illegal activities</li>
+                <li>Complying with legal obligations</li>
+            </ul>
+        </section>
+
+        <section id="sharing-information">
+            <h2>Sharing Your Information</h2>
+            <p>We may share your information in the following circumstances:</p>
+            <ul>
+                <li><strong>Service Providers:</strong> We may share your information with third-party vendors, consultants, and other service providers who need access to such information to carry out work on our behalf.</li>
+                <li><strong>Business Transfers:</strong> If we are involved in a merger, acquisition, or sale of all or a portion of our assets, your information may be transferred as part of that transaction.</li>
+                <li><strong>Legal Requirements:</strong> We may disclose your information if required to do so by law or in response to valid requests by public authorities.</li>
+                <li><strong>Protection of Rights:</strong> We may disclose your information to protect the rights, property, or safety of us, our users, or others.</li>
+            </ul>
+            <p>We do not sell or rent your personal information to third parties.</p>
+        </section>
+
+        <section id="data-security">
+            <h2>Data Security</h2>
+            <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized or unlawful processing, accidental loss, destruction, or damage. However, please note that no method of transmission over the Internet or method of electronic storage is 100% secure.</p>
+            <p>We retain your personal information only for as long as necessary to fulfill the purposes for which we collected it, including for the purpose of satisfying any legal, accounting, or reporting requirements.</p>
+        </section>
+
+        <section id="cookies">
+            <h2>Cookies and Tracking Technologies</h2>
+            <p>We use cookies and similar tracking technologies to track activity on our services and hold certain information. Cookies are files with a small amount of data that may include an anonymous unique identifier.</p>
+            <p>We use cookies for the following purposes:</p>
+            <ul>
+                <li>To maintain your session and preferences</li>
+                <li>To understand how you use our services</li>
+                <li>To enhance the functionality of our services</li>
+                <li>To personalize your experience</li>
+            </ul>
+            <p>You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our services.</p>
+        </section>
+
+        <section id="your-rights">
+            <h2>Your Rights and Choices</h2>
+            <p>Depending on your location, you may have certain rights regarding your personal information:</p>
+            <ul>
+                <li><strong>Access:</strong> You have the right to request copies of your personal information.</li>
+                <li><strong>Rectification:</strong> You have the right to request that we correct any information you believe is inaccurate or complete information you believe is incomplete.</li>
+                <li><strong>Erasure:</strong> You have the right to request that we erase your personal information under certain conditions.</li>
+                <li><strong>Restrict Processing:</strong> You have the right to request that we restrict the processing of your personal information under certain conditions.</li>
+                <li><strong>Data Portability:</strong> You have the right to request that we transfer the data we have collected to another organization or directly to you under certain conditions.</li>
+                <li><strong>Object to Processing:</strong> You have the right to object to our processing of your personal information under certain conditions.</li>
+            </ul>
+            <p>To exercise any of these rights, please contact us using the contact information provided below.</p>
+        </section>
+
+        <section id="children">
+            <h2>Children's Privacy</h2>
+            <p>Our services are not intended for children under the age of 13 (or the applicable age of digital consent in your jurisdiction). We do not knowingly collect personal information from children. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us, and we will take steps to remove that information from our servers.</p>
+        </section>
+
+        <section id="changes">
+            <h2>Changes to This Privacy Policy</h2>
+            <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Effective Date" at the bottom of this page. You are advised to review this Privacy Policy periodically for any changes.</p>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>If you have any questions about this Privacy Policy or our data practices, please contact us:</p>
+            <ul>
+                <li>By email: support@onefitclothing.com</li>
+                <li>By mail: 123 Fashion Street, Colombo 07, Sri Lanka</li>
+                <li>By phone: +94 11 222 3333</li>
+            </ul>
+        </section>
+
+        <p class="effective-date">Effective Date: April 1, 2025</p>
+    </div>
+</div>
+
+<!-- ========== FOOTER (EXACTLY AS INDEX.HTML) ========== -->
+<footer class="footer">
+    <div class="footer-top">
+        <div class="container-footer">
+            <div class="newsletter-wrapper">
+                <div class="newsletter-content">
+                    <h3>Be the first to get Updates & Offers!</h3>
+                    <p>Subscribe to our newsletter and get 10% off your first purchase</p>
+                </div>
+                <div class="newsletter-form footer-form">
+                    <input type="email" class="newsletter-input" id="footerEmail" placeholder="Your email address">
+                    <button class="newsletter-btn" id="footerSubscribeBtn">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-main">
+        <div class="container-footer">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <div class="footer-logo">OneFit Clothing</div>
+                    <p class="footer-text">Elevate your wardrobe with our premium collection of printed t-shirts and hoodies designed exclusively for modern women.</p>
+                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>123 Fashion Street, Colombo 07, Sri Lanka</span></div>
+                    <div class="contact-item"><i class="fas fa-phone-alt"></i><span>+94 11 222 3333</span></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i><span>support@onefitclothing.com</span></div>
+                    <div class="social-links">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Orders</h4>
+                    <ul><li><a href="index.html">Search</a></li><li><a href="tshirts.html">T shirts</a></li><li><a href="hoodies.html">Hoodies</a></li><li><a href="reviews.html">Reviews</a></li><li><a href="contactus.html">Contact Us</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul><li><a href="aboutus.html">About Us</a></li><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li><li><a href="size.html">Size Guide</a></li><li><a href="login.html">Log in</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>FAQs</h4>
+                    <div class="footer-accordion">
+                        <div class="footer-faq-item"><div class="footer-faq-question"><span>Shipping Information</span><i class="fas fa-chevron-down"></i></div><div class="footer-faq-answer"><p>We offer free shipping on all orders over RS: 5000.00. Standard delivery takes 3-5 business days.</p></div></div>
+                        <div class="footer-faq-item"><div class="footer-faq-question"><span>Return Policy</span><i class="fas fa-chevron-down"></i></div><div class="footer-faq-answer"><p>We accept returns within 30 days of purchase. Items must be unused with original tags.</p></div></div>
+                        <div class="footer-faq-item"><div class="footer-faq-question"><span>Size Guide</span><i class="fas fa-chevron-down"></i></div><div class="footer-faq-answer"><p>Please refer to our size chart on each product page for accurate measurements.</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-middle">
+        <div class="container-footer">
+            <div class="footer-middle-content">
+                <div class="payment-methods"><h5>Payment Methods</h5><div class="payment-icons"><i class="fab fa-cc-visa"></i><i class="fab fa-cc-mastercard"></i><i class="fab fa-cc-paypal"></i><i class="fab fa-cc-apple-pay"></i></div></div>
+                <div class="app-download"><h5>Download Our App</h5><div class="app-buttons"><a href="#" class="app-button"><i class="fab fa-apple"></i><span><small>Download on the</small><strong>App Store</strong></span></a><a href="#" class="app-button"><i class="fab fa-google-play"></i><span><small>GET IT ON</small><strong>Google Play</strong></span></a></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container-footer">
+            <div class="footer-bottom-content">
+                <div class="copyright"><p>&copy; 2025 OneFit Clothing. All Rights Reserved.</p></div>
+                <div class="back-to-top" id="backToTopFooter"><span>Back to top</span><i class="fas fa-chevron-up"></i></div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="scroll-top" id="scrollTopBtn"><i class="fas fa-arrow-up"></i></div>
+
+<script>
+    // navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if(window.scrollY > 50) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        if(window.scrollY > 400) scrollBtn.classList.add('active');
+        else scrollBtn.classList.remove('active');
+    });
+    document.getElementById('scrollTopBtn')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    document.getElementById('backToTopFooter')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('.privacy-navigation a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // footer FAQ accordion (exact same as index)
+    document.querySelectorAll('.footer-faq-item').forEach(item => {
+        const question = item.querySelector('.footer-faq-question');
+        question.addEventListener('click', () => {
+            const wasActive = item.classList.contains('active');
+            document.querySelectorAll('.footer-faq-item').forEach(i => i.classList.remove('active'));
+            if(!wasActive) item.classList.add('active');
+        });
+    });
+
+    // footer newsletter subscription
+    document.getElementById('footerSubscribeBtn')?.addEventListener('click', () => {
+        const email = document.getElementById('footerEmail')?.value;
+        if(email) alert(`Thanks for subscribing! 10% discount code: ONEFIT10`);
+        else alert('Please enter a valid email.');
+    });
+
+    // search demo
+    document.querySelector('.search-container button')?.addEventListener('click', () => {
+        const searchVal = document.getElementById('searchInput')?.value;
+        alert(`Searching for "${searchVal}" — discover your style!`);
+    });
+</script>
+</body>
+</html>

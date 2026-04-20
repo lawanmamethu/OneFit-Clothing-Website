@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneFit Clothing - Customer Reviews</title>
+    <link rel="shortcut icon" href="OneFit Clothing.png" type="image/png">
+    <!-- Homepage fonts & styles (Cormorant Garamond + DM Sans) to match index.html perfectly -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ----- ROOT VARIABLES (exactly as index.html) ----- */
+        :root {
+            --forest: #1D503A;
+            --forest-deep: #0f2e20;
+            --blush: #F9E4DA;
+            --peach: #F9C6A7;
+            --cream: #FDF6F0;
+            --red: #FF6B6B;
+            --text: #1a1a1a;
+            --shadow-sm: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
+            --shadow-md: 0 20px 35px -12px rgba(29,80,58,0.12);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ----- NAVBAR (identical to index.html) ----- */
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 22px 60px;
+            background: rgba(253, 246, 240, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(29,80,58,0.08);
+            transition: padding 0.3s ease, box-shadow 0.3s;
+        }
+        .navbar.scrolled { padding: 12px 60px; box-shadow: 0 6px 28px rgba(29,80,58,0.1); }
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 30px;
+            font-weight: 600;
+            color: var(--forest);
+            text-decoration: none;
+            margin-right: 50px;
+            letter-spacing: -0.5px;
+        }
+        .search-container {
+            position: relative;
+            width: 280px;
+            margin-right: 50px;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 11px 42px 11px 18px;
+            border-radius: 50px;
+            border: 1.5px solid rgba(29,80,58,0.15);
+            background: white;
+            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            transition: 0.3s;
+            outline: none;
+        }
+        .search-container input:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(29,80,58,0.08); }
+        .search-container button {
+            position: absolute; right: 14px; top: 50%;
+            transform: translateY(-50%);
+            background: none; border: none;
+            color: var(--forest); cursor: pointer;
+        }
+        .nav-links { display: flex; flex-grow: 1; justify-content: space-between; align-items: center; }
+        .links { display: flex; gap: 32px; }
+        .links a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+        .links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1.5px;
+            background: var(--forest);
+            transition: width 0.3s;
+        }
+        .links a:hover { color: var(--forest); }
+        .links a:hover::after { width: 100%; }
+        .icons { display: flex; gap: 22px; align-items: center; }
+        .icon {
+            position: relative;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .icon:hover { color: var(--forest); transform: scale(1.08); }
+        .badge {
+            position: absolute; top: -8px; right: -8px;
+            background: var(--forest); color: white;
+            border-radius: 50%; width: 17px; height: 17px;
+            font-size: 10px; display: flex;
+            align-items: center; justify-content: center;
+            font-weight: 600;
+        }
+
+        /* ----- REVIEWS PAGE STYLES ----- */
+        .reviews-hero {
+            background: linear-gradient(135deg, var(--forest) 0%, #2a6b4e 100%);
+            padding: 70px 40px;
+            text-align: center;
+        }
+        .reviews-hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 58px;
+            font-weight: 400;
+            color: white;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+        .reviews-hero p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.85);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .container-reviews {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px 60px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            background: white;
+            border-radius: 24px;
+            padding: 1.8rem;
+            box-shadow: var(--shadow-sm);
+            min-width: 180px;
+            transition: transform 0.3s;
+        }
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 400;
+            color: var(--forest);
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: #777;
+            letter-spacing: 0.5px;
+        }
+
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .review-card {
+            background: white;
+            border-radius: 24px;
+            padding: 1.8rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+        .review-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--forest), #5a9a7a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+        }
+        .customer-info h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        .customer-location {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .rating {
+            display: flex;
+            margin: 0.8rem 0;
+        }
+        .star {
+            color: #f5b342;
+            font-size: 1rem;
+            margin-right: 0.2rem;
+        }
+        .empty-star {
+            color: #ddd;
+            font-size: 1rem;
+            margin-right: 0.2rem;
+        }
+        .review-text {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+        .review-date {
+            font-size: 0.75rem;
+            color: #aaa;
+            text-align: right;
+        }
+
+        .cta-container {
+            text-align: center;
+            margin: 3rem 0 2rem;
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--forest);
+            color: white;
+            text-decoration: none;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .cta-button:hover {
+            background: var(--forest-deep);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(29,80,58,0.2);
+        }
+
+        .review-form-section {
+            background: white;
+            border-radius: 32px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-md);
+            margin: 2rem auto;
+            max-width: 800px;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .review-form-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--forest);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #555;
+            letter-spacing: 0.5px;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1.5px solid #e8e0d8;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--forest);
+            box-shadow: 0 0 0 3px rgba(29,80,58,0.08);
+            outline: none;
+        }
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .form-col {
+            flex: 1;
+            min-width: 180px;
+        }
+        .star-rating-container {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 0.3rem;
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            cursor: pointer;
+            font-size: 2rem;
+            color: #ddd;
+            transition: color 0.2s;
+        }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: #f5b342;
+        }
+        .review-submit-btn {
+            background: var(--forest);
+            color: white;
+            border: none;
+            border-radius: 60px;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 1.5rem auto 0;
+            width: 220px;
+        }
+        .review-submit-btn:hover {
+            background: var(--forest-deep);
+            transform: translateY(-2px);
+        }
+        .success-message {
+            display: none;
+            text-align: center;
+            color: #27ae60;
+            background: #eafaf1;
+            padding: 1rem;
+            border-radius: 16px;
+            margin-top: 1.5rem;
+        }
+        small {
+            display: block;
+            margin-top: 0.25rem;
+            color: #888;
+            font-size: 0.7rem;
+        }
+
+        /* ----- FOOTER (EXACTLY AS INDEX.HTML) ----- */
+        .footer {
+            background: var(--forest-deep);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            margin-top: 60px;
+        }
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 400px; height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.06), transparent 70%);
+        }
+        .container-footer { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .footer-top {
+            background: #143726;
+            padding: 50px 0;
+        }
+        .newsletter-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .newsletter-content { flex: 1; min-width: 300px; }
+        .newsletter-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; margin-bottom: 8px; color: white; }
+        .newsletter-content p { color: #aaa; font-size: 14px; }
+        .newsletter-form.footer-form {
+            flex: 1; min-width: 300px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            border-radius: 50px;
+            padding: 6px;
+        }
+        .newsletter-form.footer-form .newsletter-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            outline: none;
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .newsletter-form.footer-form .newsletter-input::placeholder { color: rgba(255,255,255,0.5); }
+        .newsletter-form.footer-form .newsletter-btn {
+            padding: 14px 30px;
+            background: var(--blush);
+            color: var(--forest);
+            border: none;
+            border-radius: 44px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .newsletter-form.footer-form .newsletter-btn:hover { background: var(--peach); transform: scale(0.97); }
+        .footer-main { padding: 70px 0 50px; }
+        .footer-columns { display: flex; flex-wrap: wrap; gap: 40px; }
+        .footer-column { flex: 1; min-width: 220px; }
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px; font-weight: 300;
+            margin-bottom: 18px;
+            background: linear-gradient(90deg, #fff, var(--blush));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+        .footer-text { color: #aaa; line-height: 1.7; font-size: 14px; margin-bottom: 22px; }
+        .contact-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; color: #aaa; font-size: 13px; }
+        .contact-item i { color: var(--blush); margin-top: 3px; }
+        .social-links { display: flex; gap: 10px; margin-top: 22px; }
+        .social-icon {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex; align-items: center; justify-content: center;
+            color: white; text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        .social-icon:hover { background: var(--blush); color: var(--forest); border-color: var(--blush); transform: translateY(-4px); }
+        .footer-column h4 {
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 26px;
+            color: var(--blush);
+            font-weight: 500;
+        }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 12px; }
+        .footer-column ul li a { color: #aaa; text-decoration: none; font-size: 14px; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+        .footer-column ul li a:hover { color: white; padding-left: 4px; }
+        .footer-accordion { border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; }
+        .footer-faq-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .footer-faq-item:last-child { border-bottom: none; }
+        .footer-faq-question {
+            padding: 14px 18px;
+            cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 13px; color: #ccc;
+            transition: background 0.3s;
+        }
+        .footer-faq-question:hover { background: rgba(255,255,255,0.05); }
+        .footer-faq-question i { transition: transform 0.3s; font-size: 11px; }
+        .footer-faq-item.active .footer-faq-question i { transform: rotate(180deg); }
+        .footer-faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s; }
+        .footer-faq-item.active .footer-faq-answer { max-height: 120px; padding: 0 18px 14px; }
+        .footer-faq-answer p { color: #888; font-size: 13px; line-height: 1.6; }
+        .footer-middle { padding: 36px 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .footer-middle-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px; }
+        .payment-methods h5, .app-download h5 { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--blush); margin-bottom: 16px; }
+        .payment-icons { display: flex; gap: 16px; }
+        .payment-icons i { font-size: 28px; color: #888; transition: all 0.3s; }
+        .payment-icons i:hover { color: white; transform: translateY(-3px); }
+        .app-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+        .app-button {
+            display: flex; align-items: center; gap: 10px;
+            background: rgba(255,255,255,0.07);
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none; color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+        .app-button:hover { background: rgba(255,255,255,0.14); transform: translateY(-3px); }
+        .app-button i { font-size: 22px; }
+        .app-button span { display: flex; flex-direction: column; }
+        .app-button small { font-size: 10px; opacity: 0.7; }
+        .app-button strong { font-size: 13px; }
+        .footer-bottom { padding: 24px 0; }
+        .footer-bottom-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .copyright p { color: #666; font-size: 13px; }
+        .back-to-top { display: flex; align-items: center; gap: 10px; cursor: pointer; color: #888; font-size: 13px; transition: all 0.3s; }
+        .back-to-top:hover { color: var(--blush); transform: translateY(-3px); }
+        .back-to-top i {
+            width: 30px; height: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s; font-size: 11px;
+        }
+        .back-to-top:hover i { background: var(--blush); color: var(--forest); border-color: var(--blush); }
+        .scroll-top {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 48px; height: 48px;
+            background: var(--forest);
+            color: white;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s;
+            z-index: 1000;
+            font-size: 16px;
+            box-shadow: 0 6px 24px rgba(29,80,58,0.35);
+        }
+        .scroll-top.active { opacity: 1; visibility: visible; }
+        .scroll-top:hover { background: var(--forest-deep); transform: translateY(-4px); }
+
+        @media (max-width: 900px) {
+            .navbar { padding: 18px 24px; }
+            .search-container { display: none; }
+            .reviews-hero { padding: 50px 24px; }
+            .reviews-hero h1 { font-size: 42px; }
+            .container-reviews { padding: 0 20px 40px; }
+            .stats { gap: 1rem; }
+            .stat-item { padding: 1.2rem; min-width: 140px; }
+            .footer-main { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar (exactly as index.html) -->
+<nav class="navbar" id="navbar">
+    <a href="index.html" class="logo">OneFit Clothing</a>
+    <div class="search-container">
+        <input type="text" placeholder="Search products..." id="searchInput">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+    <div class="nav-links">
+        <div class="links">
+            <a href="index.html">Home</a>
+            <a href="tshirts.html">T-Shirts</a>
+            <a href="hoodies.html">Hoodies</a>
+            <a href="login.html">Login</a>
+        </div>
+        <div class="icons">
+            <a href="cart.html" class="icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="badge">2</span>
+            </a>
+            <a href="myaccount.html" class="icon">
+                <i class="fas fa-user"></i>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="reviews-hero">
+    <h1>Customer Reviews</h1>
+    <p>See what our customers are saying about us</p>
+</section>
+
+<div class="container-reviews">
+    <!-- Stats -->
+    <div class="stats">
+        <div class="stat-item"><div class="stat-number">4.8</div><div class="stat-label">Average Rating</div></div>
+        <div class="stat-item"><div class="stat-number">1,457</div><div class="stat-label">Customer Reviews</div></div>
+        <div class="stat-item"><div class="stat-number">97%</div><div class="stat-label">Satisfied Customers</div></div>
+    </div>
+
+    <!-- Reviews Grid -->
+    <div class="reviews-container">
+        <div class="review-card"><div class="review-header"><div class="avatar">JD</div><div class="customer-info"><h3>John Davis</h3><p class="customer-location">Pitipana, Sri Lanka</p></div></div><div class="rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="review-text">"I couldn't be happier with my purchase! The quality exceeded my expectations, and the customer service team was incredibly helpful when I had questions. Will definitely be a repeat customer."</p><p class="review-date">March 15, 2025</p></div>
+        <div class="review-card"><div class="review-header"><div class="avatar">SM</div><div class="customer-info"><h3>Sarah Miller</h3><p class="customer-location">Hanwella, Sri Lanka</p></div></div><div class="rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="empty-star">★</span></div><p class="review-text">"The product arrived quickly and was exactly as described. The only reason for 4 stars instead of 5 is that I wish there were more color options available. Otherwise, very satisfied!"</p><p class="review-date">March 22, 2025</p></div>
+        <div class="review-card"><div class="review-header"><div class="avatar">RJ</div><div class="customer-info"><h3>Robert Johnson</h3><p class="customer-location">Ampara, Sri Lanka</p></div></div><div class="rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="review-text">"I've tried many similar products from competitors, but this one stands head and shoulders above the rest. The attention to detail is remarkable, and it's clear that quality is a priority. Well worth the investment!"</p><p class="review-date">February 28, 2025</p></div>
+        <div class="review-card"><div class="review-header"><div class="avatar">EP</div><div class="customer-info"><h3>Emma Parker</h3><p class="customer-location">Dehiwala, Sri Lanka</p></div></div><div class="rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="review-text">"I bought this as a gift for my wife, and she absolutely loves it! The packaging was beautiful, making it feel like a premium product from the moment it arrived. Will definitely be ordering again."</p><p class="review-date">March 10, 2025</p></div>
+        <div class="review-card"><div class="review-header"><div class="avatar">MT</div><div class="customer-info"><h3>Michael Thompson</h3><p class="customer-location">Denver, CO</p></div></div><div class="rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="empty-star">★</span></div><p class="review-text">"Great product that does exactly what it promises. The only issue I had was that shipping took a bit longer than expected, but the company was transparent about the delay. Would recommend."</p><p class="review-date">March 18, 2025</p></div>
+        <div class="review-card"><div class="review-header"><div class="avatar">AW</div><div class="customer-info"><h3>Amy Wilson</h3><p class="customer-location">Maharagama, Sri Lanka</p></div></div><div class="rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="review-text">"As someone who is very particular about quality, I was impressed by this product! It's durable, beautifully designed, and functions perfectly. The customer service was also exceptional when I needed assistance."</p><p class="review-date">March 25, 2025</p></div>
+    </div>
+
+    <!-- CTA Button -->
+    <div class="cta-container">
+        <button id="show-review-form" class="cta-button">Leave Your Review</button>
+    </div>
+
+    <!-- Review Form Section (hidden initially) -->
+    <div id="review-form-section" class="review-form-section" style="display: none;">
+        <h2 class="review-form-title">Share Your Experience</h2>
+        <form id="review-form">
+            <div class="form-row">
+                <div class="form-col"><div class="form-group"><label for="name">Your Name</label><input type="text" id="name" name="name" required></div></div>
+                <div class="form-col"><div class="form-group"><label for="location">Location (City, Country)</label><input type="text" id="location" name="location" required></div></div>
+            </div>
+            <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" name="email" required><small>Your email will not be displayed publicly</small></div>
+            <div class="form-group"><label for="product">Product Purchased</label><select id="product" name="product" required><option value="">Select a product</option><option value="product1">Inferno Edge Tee T-Shirt</option><option value="product2">Happiness Navy Blue T-Shirt</option><option value="product3">Anime Girl Printed Oversized T-Shirt</option><option value="product4">Bloom Wild T Shirt</option><option value="product5">Mocha Cozy Hoodie</option><option value="product6">Crop Top Hoodie</option><option value="product7">OneFit Originals Hoodie</option><option value="product8">Gray Marl Cropped Hoodie</option></select></div>
+            <div class="form-group star-rating-container"><label>Your Rating</label><div class="star-rating"><input type="radio" id="star5" name="rating" value="5" required><label for="star5">★</label><input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label><input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label><input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label><input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label></div></div>
+            <div class="form-group"><label for="review-title">Review Title</label><input type="text" id="review-title" name="review-title" placeholder="Summarize your experience in a few words" required></div>
+            <div class="form-group"><label for="review-text">Your Review</label><textarea id="review-text" name="review-text" placeholder="Tell us about your experience with the product..." required></textarea></div>
+            <div class="form-group"><input type="checkbox" id="consent" name="consent" required style="width: auto; margin-right: 10px;"><label for="consent" style="display: inline;">I consent to having my review and name displayed on this website</label></div>
+            <button type="submit" class="review-submit-btn">Submit Review</button>
+            <div id="success-message" class="success-message">Thank you for your review! It will be displayed after moderation.</div>
+        </form>
+    </div>
+</div>
+
+<!-- ========== FOOTER (EXACTLY AS INDEX.HTML) ========== -->
+<footer class="footer">
+    <div class="footer-top">
+        <div class="container-footer">
+            <div class="newsletter-wrapper">
+                <div class="newsletter-content">
+                    <h3>Be the first to get Updates & Offers!</h3>
+                    <p>Subscribe to our newsletter and get 10% off your first purchase</p>
+                </div>
+                <div class="newsletter-form footer-form">
+                    <input type="email" class="newsletter-input" id="footerEmail" placeholder="Your email address">
+                    <button class="newsletter-btn" id="footerSubscribeBtn">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-main">
+        <div class="container-footer">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <div class="footer-logo">OneFit Clothing</div>
+                    <p class="footer-text">Elevate your wardrobe with our premium collection of printed t-shirts and hoodies designed exclusively for modern women.</p>
+                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>123 Fashion Street, Colombo 07, Sri Lanka</span></div>
+                    <div class="contact-item"><i class="fas fa-phone-alt"></i><span>+94 11 222 3333</span></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i><span>support@onefitclothing.com</span></div>
+                    <div class="social-links">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Orders</h4>
+                    <ul><li><a href="index.html">Search</a></li><li><a href="tshirts.html">T shirts</a></li><li><a href="hoodies.html">Hoodies</a></li><li><a href="reviews.html">Reviews</a></li><li><a href="contactus.html">Contact Us</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul><li><a href="aboutus.html">About Us</a></li><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li><li><a href="size.html">Size Guide</a></li><li><a href="login.html">Log in</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>FAQs</h4>
+                    <div class="footer-accordion">
+                        <div class="footer-faq-item"><div class="footer-faq-question"><span>Shipping Information</span><i class="fas fa-chevron-down"></i></div><div class="footer-faq-answer"><p>We offer free shipping on all orders over RS: 5000.00. Standard delivery takes 3-5 business days.</p></div></div>
+                        <div class="footer-faq-item"><div class="footer-faq-question"><span>Return Policy</span><i class="fas fa-chevron-down"></i></div><div class="footer-faq-answer"><p>We accept returns within 30 days of purchase. Items must be unused with original tags.</p></div></div>
+                        <div class="footer-faq-item"><div class="footer-faq-question"><span>Size Guide</span><i class="fas fa-chevron-down"></i></div><div class="footer-faq-answer"><p>Please refer to our size chart on each product page for accurate measurements.</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-middle">
+        <div class="container-footer">
+            <div class="footer-middle-content">
+                <div class="payment-methods"><h5>Payment Methods</h5><div class="payment-icons"><i class="fab fa-cc-visa"></i><i class="fab fa-cc-mastercard"></i><i class="fab fa-cc-paypal"></i><i class="fab fa-cc-apple-pay"></i></div></div>
+                <div class="app-download"><h5>Download Our App</h5><div class="app-buttons"><a href="#" class="app-button"><i class="fab fa-apple"></i><span><small>Download on the</small><strong>App Store</strong></span></a><a href="#" class="app-button"><i class="fab fa-google-play"></i><span><small>GET IT ON</small><strong>Google Play</strong></span></a></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container-footer">
+            <div class="footer-bottom-content">
+                <div class="copyright"><p>&copy; 2025 OneFit Clothing. All Rights Reserved.</p></div>
+                <div class="back-to-top" id="backToTopFooter"><span>Back to top</span><i class="fas fa-chevron-up"></i></div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="scroll-top" id="scrollTopBtn"><i class="fas fa-arrow-up"></i></div>
+
+<script>
+    // navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if(window.scrollY > 50) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        if(window.scrollY > 400) scrollBtn.classList.add('active');
+        else scrollBtn.classList.remove('active');
+    });
+    document.getElementById('scrollTopBtn')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    document.getElementById('backToTopFooter')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Show review form when button is clicked
+    document.getElementById('show-review-form').addEventListener('click', function() {
+        const formSection = document.getElementById('review-form-section');
+        formSection.style.display = 'block';
+        formSection.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Handle form submission
+    document.getElementById('review-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        document.getElementById('success-message').style.display = 'block';
+        this.reset();
+        document.getElementById('success-message').scrollIntoView({ behavior: 'smooth' });
+        setTimeout(function() { document.getElementById('success-message').style.display = 'none'; }, 5000);
+    });
+
+    // footer FAQ accordion (exact same as index)
+    document.querySelectorAll('.footer-faq-item').forEach(item => {
+        const question = item.querySelector('.footer-faq-question');
+        question.addEventListener('click', () => {
+            const wasActive = item.classList.contains('active');
+            document.querySelectorAll('.footer-faq-item').forEach(i => i.classList.remove('active'));
+            if(!wasActive) item.classList.add('active');
+        });
+    });
+
+    // footer newsletter subscription
+    document.getElementById('footerSubscribeBtn')?.addEventListener('click', () => {
+        const email = document.getElementById('footerEmail')?.value;
+        if(email) alert(`Thanks for subscribing! 10% discount code: ONEFIT10`);
+        else alert('Please enter a valid email.');
+    });
+
+    // search demo
+    document.querySelector('.search-container button')?.addEventListener('click', () => {
+        const searchVal = document.getElementById('searchInput')?.value;
+        alert(`Searching for "${searchVal}" — discover your style!`);
+    });
+</script>
+</body>
+</html>
